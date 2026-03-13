@@ -29,6 +29,24 @@ Please, fill the following sections about your project.
 > - What am I trying to show with my visualization?
 > - Think of an overview for the project, your motivation, and the target audience.
 
+**Topic**
+
+Visualizing the Spatial-Temporal "Danger Zone" of Aviation Bird Strikes.
+
+**Goal**
+
+We aim to show the intersection between human flight paths and natural avian corridors. Specifically, we want to visualize how altitude, time of year, and weather conditions create "hotspots" of high strike risk.
+
+**Motivation**
+
+Bird strikes cost the aviation industry billions and pose safety risks. By overlaying migration patterns with historical strike data, we can move from reactive data (where strikes happened) to proactive insights (why they happen at specific altitudes/times).
+
+**Target Audience**
+
+1. Aviation Safety Officers: To understand seasonal risks at specific airports.
+2. Environmental Researchers: To see how human infrastructure impacts migratory paths.
+3. General Public: To explore the hidden "highways" in the sky we share with nature.
+
 ### Exploratory Data Analysis
 
 > Pre-processing of the data set you chose
