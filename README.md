@@ -128,10 +128,10 @@ This left skewed distribution shows that there is a positive trend of bird strik
 ### Related work
 
 
-> - What others have already done with the data?
-> - Why is your approach original?
-> - What source of inspiration do you take? Visualizations that you found on other websites or magazines (might be unrelated to your data).
-> - In case you are using a dataset that you have already explored in another context (ML or ADA course, semester project...), you are required to share the report of that work to outline the differences with the submission for this class.
+The dataset used in this project originates from the Federal Aviation Administration (FAA) Wildlife Strike Database and contains reports of strikes involving different aircraft since 1990. Because it covers a lot of time and its detailed attributes, the dataset has been widely used for exploratory analysis and visualization projects. Previous work with this dataset has primarily focused on statistical summaries and visualizations. Many analyses explore the frequency of strikes over time, identify the most involved species, or analyze the phases of flight where most incidents happen. Other projects utilize geographic patterns and focus on identifying airports or regions with high numbers of strikes, where the data is often presented using individual charts such as time-series plots, bar charts, or maps highlighting incident hotspots.
+
+These approaches provide valuable insight, but because they often present information through a series of separate visualizations, navigating through them can make it overwhelming. Especially if you want a comprehensive overview of the data to explore relationships between multiple variables simultaneously. Our approach addresses this limitation by proposing a multi-dimensional and interactive visualization that allows users to explore several aspects of the dataset within a single interface. For the design, we drew mostly inspiration from aviation visualization tools such as Flightradar24, which provides a map-based overview of global flight activity. Additionally, heatmaps of frequently affected regions were considered a way to highlight the geographic concentrations of strikes, as well as affected machinery on the plane.  
+
 
 ## Milestone 2 (17th April, 5pm)
 
