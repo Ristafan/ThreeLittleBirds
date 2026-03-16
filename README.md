@@ -19,33 +19,37 @@ Please, fill the following sections about your project.
 
 ### Dataset
 
-> Find a dataset (or multiple) that you will explore. Assess the quality of the data it contains and how much preprocessing / data-cleaning it will require before tackling visualization. We recommend using a standard dataset as this course is not about scraping nor data processing.
->
-> Hint: some good pointers for finding quality publicly available datasets ([Google dataset search](https://datasetsearch.research.google.com/), [Kaggle](https://www.kaggle.com/datasets), [OpenSwissData](https://opendata.swiss/en/), [SNAP](https://snap.stanford.edu/data/) and [FiveThirtyEight](https://data.fivethirtyeight.com/)).
+> The main dataset for this project is the Federal Aviation Administration (FAA) Aircraft Wildlife Strike Database (1990–2023), available on Kaggle. It documents incidents of wildlife strikes involving aircraft, primarily bird-related events. The dataset originates from a reputable source (FAA) and carries a usability score of 10 on Kaggle, suggesting high-quality and well-maintained data.
+
+> Although the dataset is comprehensive—with over 100 columns covering species, aircraft type, flight phase, and location—some preprocessing will be required. The main tasks include handling missing or unknown entries (notably for bird species), addressing outliers in numeric variables, and ensuring consistent formatting of location and date fields. Overall, the data quality is strong, and preprocessing will focus on cleaning rather than extensive transformation.
+
+> A secondary dataset, A Global Dataset of Directional Migration Networks of Migratory Birds, provides migration path information derived from a systematic review of English and Chinese literature (1993–2023). The data already includes curated GPS coordinates, which will allow comparison with FAA incident locations to explore geographic correlations. Preprocessing will mainly involve filtering relevant species and migration routes and aligning coordinate systems with the FAA dataset.
+
+> The main challenge will be integrating these datasets due to potential differences in spatial resolution and taxonomic naming conventions, but overall, both sources are clean and ready for analysis.
+
 
 ### Problematic
 
-> Frame the general topic of your visualization and the main axis that you want to develop.
-> - What am I trying to show with my visualization?
-> - Think of an overview for the project, your motivation, and the target audience.
+**Topic:**
+ Visualizing the Spatial–Temporal “Danger Zone” of Aviation Bird Strikes
 
-**Topic**
+**Overview:**
+This project explores the intersection of human air travel and natural bird migration. Using FAA wildlife strike data combined with global avian migration routes, we aim to visualize where and when aircraft are most at risk of encountering birds. The central axes of the visualization will be space (geographic location), time (seasonality, year, and flight phase), and flight conditions (altitude and weather).
 
-Visualizing the Spatial-Temporal "Danger Zone" of Aviation Bird Strikes.
+**Motivation:**
+Bird strikes pose both economic and safety threats to aviation, causing significant repair costs and operational disruptions. By overlaying strike incidents with migratory corridors, this project aims to turn historical data into predictive insight — shifting focus from “where strikes happened” to understanding why risk peaks at specific altitudes or seasons.
 
-**Goal**
+**Target Audience:**
+- Aviation safety officers seeking to anticipate seasonal risks near specific airports.
+- Environmental researchers examining how air traffic overlaps with migratory pathways.
+- The general public interested in visualizing the shared aerial space between humans and wildlife.
 
-We aim to show the intersection between human flight paths and natural avian corridors. Specifically, we want to visualize how altitude, time of year, and weather conditions create "hotspots" of high strike risk.
 
-**Motivation**
+**Analytical Components:**
+1. Geospatial correlation: Map overlaps between strike locations and migration routes to identify risk hotspots.
+2. Temporal analysis: Examine how strike frequency and severity change across months, years, and airports.
+3. Damage profiling: Visualize which aircraft components are most affected and under what flight conditions, offering insights for preventive measures.
 
-Bird strikes cost the aviation industry billions and pose safety risks. By overlaying migration patterns with historical strike data, we can move from reactive data (where strikes happened) to proactive insights (why they happen at specific altitudes/times).
-
-**Target Audience**
-
-1. Aviation Safety Officers: To understand seasonal risks at specific airports.
-2. Environmental Researchers: To see how human infrastructure impacts migratory paths.
-3. General Public: To explore the hidden "highways" in the sky we share with nature.
 
 ### Exploratory Data Analysis
 
