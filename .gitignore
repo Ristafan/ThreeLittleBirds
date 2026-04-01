@@ -16,3 +16,4 @@ coverage/
 *.tar.gz
 *.tgz
 *.cache
+public/data/STRIKE_REPORTS.csv

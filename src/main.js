@@ -3,6 +3,9 @@
    Lightweight enhancements: active nav link highlighting
    on scroll, lazy-image fade-in.
    ========================================================= */
+import './components/tertiary_vis.js';
+import './components/sliders.js';
+import './styles/main.css';
 
 (function () {
   'use strict';
