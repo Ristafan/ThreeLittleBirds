@@ -18,12 +18,12 @@ import './styles/main.css';
 
 
   /* ── Load data once for all visuals ────────────────────────── */
-  d3.csv("/data/STRIKE_REPORTS.csv").then(data => {
+  d3.csv("data/STRIKE_REPORTS.csv").then(data => {
 
     // Initialize Airplane Heatmap
     createHeatmap({
         containerId: "#Airplane",
-        svgPath: "/data/images/airplane.svg",
+        svgPath: "data/images/airplane.svg",
         acClass: "A",
         parts: ["STR_RAD", "STR_WINDSHLD", "STR_ENG1", "STR_ENG2", "STR_FUSE", "STR_WING_ROT", "STR_TAIL"],
         data: data
@@ -31,7 +31,7 @@ import './styles/main.css';
 
     createHeatmap({
         containerId: "#Helicopter",
-        svgPath: "/data/images/helicopter.svg",
+        svgPath: "data/images/helicopter.svg",
         acClass: "B",
         parts: ["STR_RAD", "STR_WINDSHLD", "STR_ENG1", "STR_ENG2", "STR_FUSE", "STR_WING_ROT", "STR_TAIL"],
         data: data
