@@ -15,16 +15,14 @@ import * as d3 from 'd3';
     ];
 
     // 3. Load both the SVG and the CSV simultaneously
-    // Ensure the path to your SVG is correct relative to your server root
     Promise.all([
-        d3.xml("/data/images/airplane.svg"), // Update this path to where your file lives
+        d3.xml("/data/images/airplane.svg"), 
         d3.csv("/data/STRIKE_REPORTS.csv")
     ]).then(([xml, data]) => {
         
         console.log("SVG and CSV successfully loaded");
 
         // --- SVG INJECTION ---
-        // Inject the loaded SVG into the container
         const importedNode = document.importNode(xml.documentElement, true);
         
         container.append("div")
@@ -32,15 +30,11 @@ import * as d3 from 'd3';
             .node()
             .appendChild(importedNode);
 
-        // Select the newly injected SVG to work with it
-        // Note: Make sure the <svg> tag inside your .svg file has this ID
         const svg = d3.select("#airplane-blueprint");
 
         // --- DATA PROCESSING ---
-        // Filter for Airplanes (Type A)
         const airplaneData = data.filter(d => d.AC_CLASS === "A");
 
-        // Aggregate Counts per Part
         let strikeCounts = {};
         airplaneParts.forEach(part => {
             strikeCounts[part] = d3.sum(airplaneData, d => {
@@ -49,44 +43,95 @@ import * as d3 from 'd3';
             });
         });
 
-        console.log("Strike Counts:", strikeCounts);
-
         // --- VISUALIZATION ---
-        // Create Color Scale
         const maxStrikes = d3.max(Object.values(strikeCounts)) || 1;
         const colorScale = d3.scaleSequential()
             .domain([0, maxStrikes])
             .interpolator(d3.interpolateYlOrRd);
 
-        // Apply Heatmap to SVG
+        // Apply Heatmap to SVG Parts
         airplaneParts.forEach(part => {
             const count = strikeCounts[part];
             const partElement = svg.select(`#${part}`);
 
-            if (partElement.empty()) {
-                console.warn(`Warning: ID #${part} not found in the imported SVG.`);
-                return;
-            }
+            if (partElement.empty()) return;
             
-            // Apply color transition
             partElement.transition()
                 .duration(1000)
                 .style("fill", count > 0 ? colorScale(count) : "#e0e0e0")
                 .style("stroke", "#333")
                 .style("stroke-width", "1px");
 
-            // Add Interaction
             partElement.attr("cursor", "pointer")
                 .on("mouseover", function() {
                     d3.select(this).style("stroke-width", "3px");
-                    console.log(`Part: ${part} | Strikes: ${count}`); 
                 })
                 .on("mouseout", function() {
                     d3.select(this).style("stroke-width", "1px");
                 });
         });
 
-        console.log("Visualization complete.");
+        // --- LEGEND CONSTRUCTION ---
+
+        // 1. Define Gradient (Keep this the same)
+        const defs = svg.append("defs");
+        const linearGradient = defs.append("linearGradient")
+            .attr("id", "heatmap-gradient");
+
+        linearGradient.selectAll("stop")
+            .data(d3.range(0, 1.1, 0.1))
+            .enter().append("stop")
+            .attr("offset", d => `${d * 100}%`)
+            .attr("stop-color", d => d3.interpolateYlOrRd(d));
+
+        // 2. Position Legend (Top Left)
+        const legendWidth = 150;
+        const legendHeight = 15;
+
+        // Increase top margin slightly so the title (at y: -10) isn't cut off
+        const margin = { left: 20, top: 35 }; 
+
+        const legendGroup = svg.append("g")
+            .attr("class", "legend")
+            // FIX: Use margin.top directly instead of height - margin.bottom
+            .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+        // Draw the color bar
+        legendGroup.append("rect")
+            .attr("width", legendWidth)
+            .attr("height", legendHeight)
+            .style("fill", "url(#heatmap-gradient)")
+            .style("stroke", "#333")
+            .style("stroke-width", "1px");
+
+        // Add Label: 0
+        legendGroup.append("text")
+            .attr("x", 0)
+            .attr("y", legendHeight + 15)
+            .style("font-size", "12px")
+            .style("font-family", "sans-serif")
+            .text("0");
+
+        // Add Label: Max
+        legendGroup.append("text")
+            .attr("x", legendWidth)
+            .attr("y", legendHeight + 15)
+            .attr("text-anchor", "end")
+            .style("font-size", "12px")
+            .style("font-family", "sans-serif")
+            // Note: Ensure maxStrikes is defined in your scope
+            .text(`${(maxStrikes / 1000).toFixed(1)}k Strikes`); 
+
+        // Add Legend Title
+        legendGroup.append("text")
+            .attr("x", 0)
+            .attr("y", -10) // This sits 10px above the rect
+            .style("font-size", "14px")
+            .style("font-weight", "bold")
+            .style("font-family", "sans-serif")
+            .text("Bird Strike Intensity");
+
+        console.log("Visualization and Legend complete.");
 
     }).catch(error => {
         console.error("Error loading files in heatmap script:", error);
