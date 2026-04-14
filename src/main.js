@@ -33,7 +33,7 @@ import './styles/main.css';
         containerId: "#Helicopter",
         svgPath: "/data/images/helicopter.svg",
         acClass: "B",
-        parts: ["STR_RAD", "STR_WINDSHLD", "STR_ENG1", "STR_ENG2", "STR_FUSE", "STR_WING_ROT", "STR_TAIL"],
+        parts: ["STR_RAD", "STR_WINDSHLD", "STR_ENG1", "STR_ENG2", "STR_ENG3", "STR_ENG4", "STR_PROP", "STR_WING_ROT", "STR_FUSE", "STR_LG", "STR_TAIL", "STR_LGHTS"],
         data: data
     });
 
