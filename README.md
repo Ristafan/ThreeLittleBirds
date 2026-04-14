@@ -96,7 +96,7 @@ The complementary dataset contains 42,844 entries across 26 columns. It tracks g
 - Timing: Migration is highly bimodal. The Autumn surge (July–September) is the largest movement window, followed by a secondary Spring peak (March–April).
 - Conservation: While 85.4% are "Least Concern," nearly 15% of tracked movements involve at-risk species (Vulnerable to Critically Endangered), providing vital data for protected transit nodes.
 
-![alt text](https://github.com/com-480-data-visualization/ThreeLittleBirds/blob/master/public/data/images/ColumnsWithMissingData.png)
+![alt text](https://github.com/com-480-data-visualization/ThreeLittleBirds/blob/master/public/data/images/FrequencyOfMigrationStartsByMonth.png)
 
 **Notable Trends**
 
