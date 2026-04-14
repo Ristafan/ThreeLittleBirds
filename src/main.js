@@ -37,6 +37,14 @@ import './styles/main.css';
         data: data
     });
 
+    createHeatmap({
+        containerId: "#Glider",
+        svgPath: "/data/images/glider.svg",
+        acClass: "C",
+        parts: ["STR_RAD", "STR_WINDSHLD", "STR_ENG1", "STR_ENG2", "STR_ENG3", "STR_ENG4", "STR_PROP", "STR_WING_ROT", "STR_FUSE", "STR_LG", "STR_TAIL", "STR_LGHTS"],
+        data: data
+    });
+
     // repeat for other aircrafts
   });
 
