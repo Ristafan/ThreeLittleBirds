@@ -3,6 +3,11 @@ import VectorLayer from 'ol/layer/Vector.js';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 
+import Fill from 'ol/style/Fill.js';
+import Stroke from 'ol/style/Stroke.js';
+import Style from 'ol/style/Style.js';
+import Text from 'ol/style/Text.js';
+
 export function createBaseLayer() {
   return new TileLayer({
     source: new OSM(),
@@ -89,7 +94,8 @@ export function createMigrationLayer(map, vectorSource) {
 
         // already selected -> deselect
         if (selectedFeatures.has(feature)) {
-          const baseColor = feature.get('color').slice(0, 3);
+          const color = feature.get('color') || [0, 0, 0, 0.2]; // default to semi-transparent black if no color set, avoids issues if color property is missing for some reason
+          const baseColor = color.slice(0, 3);
           feature.set('color', [...baseColor, 0.2]);
           feature.set('width', 1.5);
           feature.set('selected', false);
@@ -98,7 +104,8 @@ export function createMigrationLayer(map, vectorSource) {
 
         } else {
           // newly selected -> highlight
-          const baseColor = feature.get('color').slice(0, 3);
+          const color = feature.get('color') || [0, 0, 0, 0.2];
+          const baseColor = color.slice(0, 3);
           feature.set('color', [...baseColor, 1.0]);
           feature.set('width', 4);
           feature.set('selected', true);
