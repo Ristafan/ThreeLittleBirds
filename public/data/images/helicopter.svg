@@ -5,9 +5,9 @@
       <rect x="135" y="90" width="8" height="120" rx="4" />
       <rect x="257" y="90" width="8" height="120" rx="4" />
       <rect x="143" y="120" width="25" height="4" />
-      <rect x="143" y="170" width="25" height="4" />
+      <rect x="143" y="170" width="29" height="4" />
       <rect x="232" y="120" width="25" height="4" />
-      <rect x="232" y="170" width="25" height="4" />
+      <rect x="228" y="170" width="29" height="4" />
     </g>
 
     <g id="STR_TAIL">
@@ -52,7 +52,7 @@
     </g>
 
     <g id="STR_ENG3">
-      <rect x="192" y="182" width="16" height="10" rx="2" fill="#d0d0d0" />
+      <rect x="188" y="182" width="24" height="10" rx="2" fill="#d0d0d0" />
     </g>
 
     <g id="STR_ENG4">
@@ -72,9 +72,9 @@
     </g>
 
     <g id="STR_LGHTS">
-      <circle cx="139" cy="94" r="3" fill="#ff4444" stroke="#333333" stroke-width="1" />
-      <circle cx="261" cy="94" r="3" fill="#44ff44" stroke="#333333" stroke-width="1" />
-      <circle cx="200" cy="342" r="3" fill="#ffffff" stroke="#333333" stroke-width="1" />
+      <circle cx="139" cy="94" r="3" fill="#d0d0d0" stroke="#333333" stroke-width="1" />
+      <circle cx="261" cy="94" r="3" fill="#d0d0d0" stroke="#333333" stroke-width="1" />
+      <circle cx="200" cy="342" r="3" fill="#d0d0d0" stroke="#333333" stroke-width="1" />
     </g>
 
   </g>
