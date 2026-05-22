@@ -1,24 +1,24 @@
 // createHeatmap.js
 import * as d3 from 'd3';
-import { buildCheckboxPanel, FIELD_GROUPS } from './heatmap/checkboxPanel.js';
 
 // ─── 1. DATA SETUP ────────────────────────────────────────────────────────────
 
+const COST_FIELDS = [
+  { key: "COST_OTHER_INFL_ADJ", label: "Costs", format: "currency" },
+  { key: "NR_INJURIES",         label: "Injuries",                     format: "number"   },
+  { key: "NR_FATALITIES",       label: "Fatalities",                   format: "number"   },
+];
+
 /**
  * Filters the dataset by aircraft class and aggregates per-part strike statistics.
+ * Computes strike count and averages for cost/casualty fields.
  * Returns a plain object keyed by part ID.
  */
 function setupData(data, acClass, parts) {
   const filteredData = data.filter(d => d.AC_CLASS === acClass);
 
   const sumField = (rows, field) =>
-    d3.sum(rows, d => {
-      const val = String(d[field]).trim().toUpperCase();
-      return val === "TRUE" || val === "1" ? 1 : 0;
-    });
-
-  // Collect every stat key from FIELD_GROUPS so the list is defined in one place
-  const allStatKeys = FIELD_GROUPS.flatMap(g => g.fields.map(f => f.key));
+    d3.sum(rows, d => (+d[field] || 0));
 
   const partStats = {};
   parts.forEach(part => {
@@ -27,11 +27,9 @@ function setupData(data, acClass, parts) {
       return val === "TRUE" || val === "1";
     });
 
-    const stats = {
-      strikes: partData.length,
-    };
+    const stats = { strikes: partData.length };
 
-    allStatKeys.forEach(key => {
+    COST_FIELDS.forEach(({ key }) => {
       stats[key] = sumField(partData, key);
     });
 
@@ -87,7 +85,6 @@ function renderHeatmap(wrapper, svgPath, parts, partStats, acClass, onPartHover)
         .on("mouseover",  (event) => onPartHover.show(event, part, stats))
         .on("mousemove",  (event) => onPartHover.move(event))
         .on("mouseout",   ()      => onPartHover.hide())
-        // keep the stroke highlight on the element itself
         .on("mouseover.stroke", function() {
           d3.select(this).style("stroke-width", "3px");
         })
@@ -128,31 +125,40 @@ function renderHeatmap(wrapper, svgPath, parts, partStats, acClass, onPartHover)
 
 // ─── 3. TOOLTIP ───────────────────────────────────────────────────────────────
 
+const fmtCurrency = new Intl.NumberFormat("en-US", {
+  style: "currency", currency: "USD", maximumFractionDigits: 0
+});
+const fmtNumber = new Intl.NumberFormat("en-US", {
+  maximumFractionDigits: 2
+});
+
 /**
  * Creates (or reuses) the floating tooltip element and returns
  * the three interaction handlers expected by renderHeatmap.
- * getActiveKeys is a function returning a Set<string> of visible field keys.
  */
-function setupTooltip(getActiveKeys) {
+function setupTooltip() {
   let tooltip = d3.select("body").select(".heatmap-tooltip");
   if (tooltip.empty()) {
     tooltip = d3.select("body").append("div").attr("class", "heatmap-tooltip");
   }
 
   function buildTooltipHTML(part, stats) {
-    const activeKeys = getActiveKeys();
+    // Human-readable part label: strip the "STR_" prefix and title-case
+    const partLabel = part
+      .replace(/^STR_/, "")
+      .replace(/_/g, " ")
+      .replace(/\b\w/g, c => c.toUpperCase());
 
-    let html = `<div class="tooltip-title">Damage zone: ${part}</div>`;
-    html += `Strikes: <strong>${stats.strikes}</strong><br/>`;
+    let html = `<div class="tooltip-title">${partLabel}</div>`;
+    html += `<div class="tooltip-strikes">Total Strikes: <strong>${stats.strikes.toLocaleString()}</strong></div>`;
+    html += `<div class="tooltip-section-label">Totals</div>`;
 
-    FIELD_GROUPS.forEach(({ group, fields }) => {
-      const visibleFields = fields.filter(f => activeKeys.has(f.key));
-      if (visibleFields.length === 0) return;
-
-      html += `<div class="tooltip-section-label">${group}</div>`;
-      visibleFields.forEach(({ key, label }) => {
-        html += `${label}: <strong>${stats[key]}</strong><br/>`;
-      });
+    COST_FIELDS.forEach(({ key, label, format }) => {
+      const val = stats[key];
+      const formatted = format === "currency"
+        ? fmtCurrency.format(val)
+        : fmtNumber.format(val);
+      html += `<div class="tooltip-row">${label}: <strong>${formatted}</strong></div>`;
     });
 
     return html;
@@ -194,25 +200,13 @@ export function createHeatmap(config) {
 
   // ── layout shell ──────────────────────────────────────────────────────────
   const layout = container.append("div").attr("class", "heatmap-layout");
-
-  const blueprintWrapper = layout.append("div")
-  .attr("class", "blueprint-wrapper")
-  .style("width", "100%")
-  .style("height", "100%");
-  const controlsWrapper  = layout.append("div"); // checkbox panel mounts here
+  const blueprintWrapper = layout.append("div").attr("class", "blueprint-wrapper");
 
   // ── data ──────────────────────────────────────────────────────────────────
   const partStats = setupData(data, acClass, parts);
 
-  // ── checkbox panel ────────────────────────────────────────────────────────
-  // getActiveKeys is returned by buildCheckboxPanel; tooltip reads it on each hover
-  const getActiveKeys = buildCheckboxPanel(controlsWrapper.node(), () => {
-    // onChange: tooltip is rebuilt live on next hover — no extra work needed here.
-    // If you want to re-render on change, trigger renderHeatmap again from here.
-  });
-
   // ── tooltip ───────────────────────────────────────────────────────────────
-  const tooltipHandlers = setupTooltip(getActiveKeys);
+  const tooltipHandlers = setupTooltip();
 
   // ── heatmap ───────────────────────────────────────────────────────────────
   renderHeatmap(blueprintWrapper, svgPath, parts, partStats, acClass, tooltipHandlers);
