@@ -1,12 +1,19 @@
 'use strict';
 
-const sliderState = {
+export const sliderState = {
     year:    { min: 0, max: 0 },
     altitude:{ min: 0,    max: 0 },
     month:   { min: 1,    max: 12 },
     sky:     null,
     phase:   null,
     timeofday: null,
+
+    // for map clicks
+    selection: {
+        active: false,   // whether a cluster selection is currently active
+        type: null,   // 'cluster' | null
+        ids: []       // list of selected feature IDs
+    },
 };
 
 export function getSliderFilter() {
@@ -357,4 +364,18 @@ function makeSectionTitle(text) {
     const t = createElement('div', 'section-title');
     t.textContent = text;
     return t;
+}
+
+export function applyClusterSelection(data) {
+    if (!sliderState.selection?.active) {
+        return data;
+    }
+
+    const ids = new Set(
+        sliderState.selection.ids.map(String)
+    );
+
+    return data.filter(d =>
+        ids.has(String(d.id ?? d.INDEX_NR))
+    );
 }

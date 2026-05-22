@@ -12,6 +12,7 @@ export async function clusterSource_from_data(data) {
 // convert each data point to an OpenLayers Feature with a Point geometry
   const features = data.map(d => {
     return new Feature({
+      id: d.id,
       geometry: new Point(fromLonLat([+d.lon, +d.lat])),
       ...d
     });
@@ -25,7 +26,8 @@ export async function clusterSource_from_data(data) {
       return new Feature({
         geometry: point,
         features: features,
-        size: features.length // add a 'size' property to indicate how many points are in this cluster, used for styling
+        size: features.length, // add a 'size' property to indicate how many points are in this cluster, used for styling
+        idx: features.map(f => f.get('id')) // add an 'idx' property that contains the IDs of the original points in this cluster, used for filtering
       });
     }
   });
@@ -58,7 +60,6 @@ export function migration_source_from_data(data) {
   let colorIndex = 0;
   Object.keys(grouped).forEach(key => {
     const species = key.split('_')[0];
-    console.log(species);
     if (!speciesColors[species]) {
       const color = d3.schemeCategory10[colorIndex % 10];
       const rgb = d3.color(color).rgb();

@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 
 import { init_map } from './map/initMap.js';
-import { init_sliders} from './sliders.js';
+import { init_sliders, applyClusterSelection} from './sliders.js';
 import { init_heatmaps } from './heatmap/initHeatmaps.js';
 import { init_barplot } from './barplot/initBarplot.js';
 import { MIGRATION_LAYER_ID } from './map/layers.js';
@@ -72,7 +72,8 @@ export async function init_visualizations() {
 
 export function update_visualizations(filterFn) {
   if (!state.data) return;
-  const filtered = state.data.filter(filterFn);
+  const baseFiltered = state.data.filter(filterFn);
+  const filtered = applyClusterSelection(baseFiltered);
   console.log('Filtered rows:', filtered.length);
 
 
