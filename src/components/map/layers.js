@@ -7,6 +7,10 @@ import Fill from 'ol/style/Fill.js';
 import Stroke from 'ol/style/Stroke.js';
 import Style from 'ol/style/Style.js';
 import Text from 'ol/style/Text.js';
+import { extend } from 'ol/extent';
+
+import { update_visualizations } from '../init_and_update.js';
+import { getSliderFilter, sliderState } from '../sliders.js';
 
 export function createBaseLayer() {
   return new TileLayer({
@@ -18,43 +22,6 @@ export function createBaseLayer() {
 
 const POINTS_LAYER_ID = 'pointsLayer';
 export const MIGRATION_LAYER_ID = 'migrationLayer';
-
-export function refreshPointsLayer(map, clusterSource) {
-  map.getLayers().getArray()
-      .filter(layer => layer.get('id') === POINTS_LAYER_ID)
-      .forEach(layer => map.removeLayer(layer));
-
-  const pointsLayer = new WebGLVectorLayer({ // use WebGL for better performance with many points, but does not support writing text lables or hover interactions
-    source: clusterSource, // check out multi-scale rendering, or adding layer with labels that are only visible at certain zoom levels (zoom dependent styling)
-    style: {
-      'circle-radius': ['interpolate', ['exponential', 1.75], ['get', 'size'], 1, 4,
-                                                                    10, 6, 
-                                                                    50, 9,
-                                                                    100, 12,
-                                                                    150, 14,
-                                                                    200, 16,
-                                                                    250, 17,
-                                                                    400, 20,
-                                                                    500, 23,
-                                                                    700, 26], // use exponential interpolation for better visual scaling, adjust breakpoints and sizes as needed
-      'circle-fill-color': ['interpolate', ['exponential', 1.75], ['get', 'size'], 1,   '#1f4e79',  // dark blue (very visible on light bg)
-  10,  '#2b83ba',
-  50,  '#4aa3c7',
-  100, '#3f7fbf',
-  150, '#6c63c7',
-  200, '#8e44ad',
-  250, '#b23a48',
-  400, '#d64541',
-  500, '#e74c3c',
-  700, '#c0392b'], // add a color gradient based on size as well
-      'circle-stroke-color': 'white',
-      'circle-stroke-width': 1
-    }
-  });
-
-  pointsLayer.set('id', POINTS_LAYER_ID);
-  map.addLayer(pointsLayer);
-}
 
 export function createMigrationLayer(map, vectorSource) {
   let existingLayer = null;
@@ -80,6 +47,8 @@ export function createMigrationLayer(map, vectorSource) {
 
   migrationLayer.set('id', MIGRATION_LAYER_ID);
   migrationLayer.setVisible(false);
+
+  migrationLayer.setZIndex(30);
   map.addLayer(migrationLayer);
 
   // add click interaction to highlight selected migration route
@@ -160,5 +129,225 @@ export function createBirdSpeciesLayer(map, vectorSource) {
     }
   });
 
+  labelLayer.setZIndex(40);
+
   map.addLayer(labelLayer);
+}
+
+export function createPointsLayers(map) {
+  // prevent duplicates
+  if (map.get('pointsLayers')) return map.get('pointsLayers');
+
+  const pointsLayer = new WebGLVectorLayer({
+    source: null, // set later
+    style: {
+      'circle-radius': [
+        'interpolate',
+        ['exponential', 1.75],
+        ['get', 'size'],
+        1, 4,
+        10, 6,
+        50, 9,
+        100, 12,
+        150, 14,
+        200, 16,
+        250, 17,
+        400, 20,
+        500, 23,
+        700, 26
+      ],
+
+      'circle-fill-color': [
+        'interpolate',
+        ['exponential', 1.75],
+        ['get', 'size'],
+        1,   'rgba(255, 212, 90, 0.72)',
+        10,  'rgba(255, 198, 90, 0.72)',
+        50,  'rgba(255, 184, 90, 0.74)',
+        100, 'rgba(255, 169, 90, 0.76)',
+        150, 'rgba(255, 150, 90, 0.78)',
+        200, 'rgba(255, 139, 90, 0.80)',
+        250, 'rgba(255, 116, 90, 0.82)',
+        400, 'rgba(255, 95, 90, 0.84)',
+        500, 'rgba(255, 74, 74, 0.86)',
+        700, 'rgba(229, 57, 53, 0.90)'
+      ],
+
+      'circle-stroke-color': 'rgba(255,255,255,0.7)',
+      'circle-stroke-width': 0.8,
+    }
+  });
+
+  const labelLayer = new VectorLayer({
+    source: null,
+    style: (feature) => {
+      const size = feature.get('features').length;
+      if (size <= 1) return null;
+
+      return new Style({
+        text: new Text({
+          text: String(size),
+          font: '600 11px sans-serif',
+          fill: new Fill({ color: 'rgba(255,255,255,0.9)' }),
+          stroke: new Stroke({
+            color: 'rgba(0,0,0,0.22)',
+            width: 1.5,
+          }),
+        }),
+      });
+    },
+  });
+
+  pointsLayer.set('id', POINTS_LAYER_ID);
+  labelLayer.set('id', `${POINTS_LAYER_ID}_labels`);
+
+  pointsLayer.setZIndex(10);
+  labelLayer.setZIndex(20);
+
+  map.addLayer(pointsLayer);
+  map.addLayer(labelLayer);
+
+  map.set('pointsLayers', {
+    pointsLayer,
+    labelLayer,
+    clickHandlerAdded: false
+  });
+
+  return map.get('pointsLayers');
+}
+
+export function updatePointsLayers(map, clusterSource) {
+  const layers = map.get('pointsLayers');
+
+  if (!layers) {
+    throw new Error('Call createPointsLayers(map) first');
+  }
+
+  let { pointsLayer, labelLayer } = layers;
+
+  // REMOVE OLD WEBGL LAYER
+  map.removeLayer(pointsLayer);
+
+  // RECREATE WEBGL LAYER
+  pointsLayer = new WebGLVectorLayer({
+    source: clusterSource,
+
+    style: {
+      'circle-radius': [
+        'interpolate',
+        ['exponential', 1.75],
+        ['get', 'size'],
+        1, 4,
+        10, 6,
+        50, 9,
+        100, 12,
+        150, 14,
+        200, 16,
+        250, 17,
+        400, 20,
+        500, 23,
+        700, 26
+      ],
+
+      'circle-fill-color': [
+        'interpolate',
+        ['exponential', 1.75],
+        ['get', 'size'],
+        1,   'rgba(255, 212, 90, 0.72)',
+        10,  'rgba(255, 198, 90, 0.72)',
+        50,  'rgba(255, 184, 90, 0.74)',
+        100, 'rgba(255, 169, 90, 0.76)',
+        150, 'rgba(255, 150, 90, 0.78)',
+        200, 'rgba(255, 139, 90, 0.80)',
+        250, 'rgba(255, 116, 90, 0.82)',
+        400, 'rgba(255, 95, 90, 0.84)',
+        500, 'rgba(255, 74, 74, 0.86)',
+        700, 'rgba(229, 57, 53, 0.90)'
+      ],
+
+      'circle-stroke-color': 'rgba(255,255,255,0.7)',
+      'circle-stroke-width': 0.8,
+    }
+  });
+
+  pointsLayer.set('id', POINTS_LAYER_ID);
+
+  // INSERT BELOW LABELS
+  map.getLayers().insertAt(
+    map.getLayers().getLength() - 1,
+    pointsLayer
+  );
+
+  // LABEL LAYER CAN STAY
+  labelLayer.setSource(clusterSource);
+
+  // UPDATE STORED REFERENCE
+  layers.pointsLayer = pointsLayer;
+
+  map.render();
+}
+
+export function attachClusterClickHandler(map) {
+  const layers = map.get('pointsLayers');
+  if (!layers || layers.clickHandlerAdded) return;
+
+  map.on('singleclick', (event) => {
+    const currentLayers = map.get('pointsLayers');
+
+    const pointsLayer = currentLayers.pointsLayer;
+    const labelLayer = currentLayers.labelLayer;
+    const feature = map.forEachFeatureAtPixel(
+      event.pixel,
+      (feature, layer) => {
+        if (layer === pointsLayer || layer === labelLayer) {
+          return feature;
+        }
+      }
+    );
+
+    // CLICK OUTSIDE CLUSTERS
+    if (!feature) {
+      if (sliderState.selection?.active) {
+        sliderState.selection = {
+          active: false,
+          type: null,
+          ids: []
+        };
+
+        update_visualizations(getSliderFilter());
+      }
+
+      return;
+    }
+
+    // CLICKED A CLUSTER
+    const clusteredFeatures = feature.get('features');
+
+    if (!clusteredFeatures?.length) return;
+
+    const extent = clusteredFeatures[0]
+      .getGeometry()
+      .getExtent()
+      .slice();
+
+    for (const f of clusteredFeatures) {
+      extend(extent, f.getGeometry().getExtent());
+    }
+
+    sliderState.selection = {
+      active: true,
+      type: 'cluster',
+      ids: clusteredFeatures.map(f => String(f.get('id')))
+    };
+
+    update_visualizations(getSliderFilter());
+
+    map.getView().fit(extent, {
+      duration: 500,
+      padding: [80, 80, 80, 80],
+      maxZoom: 10,
+    });
+  });
+
+  layers.clickHandlerAdded = true;
 }
