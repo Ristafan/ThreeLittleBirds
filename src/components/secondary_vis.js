@@ -195,7 +195,10 @@ export function createHeatmap(config) {
   // ── layout shell ──────────────────────────────────────────────────────────
   const layout = container.append("div").attr("class", "heatmap-layout");
 
-  const blueprintWrapper = layout.append("div").attr("class", "blueprint-wrapper");
+  const blueprintWrapper = layout.append("div")
+  .attr("class", "blueprint-wrapper")
+  .style("width", "100%")
+  .style("height", "100%");
   const controlsWrapper  = layout.append("div"); // checkbox panel mounts here
 
   // ── data ──────────────────────────────────────────────────────────────────
