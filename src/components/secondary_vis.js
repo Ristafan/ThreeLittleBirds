@@ -44,7 +44,7 @@ const COST_FIELDS = [
  * Returns a plain object keyed by SVG part ID (STR_*).
  */
 function setupData(data, acClass, parts) {
-  const filteredData = data.filter(d => d.AC_CLASS === acClass);
+  const filteredData = data.filter(d => acClass.includes(d.AC_CLASS));
 
   const sumField = (rows, field) =>
     d3.sum(rows, d => (+d[field] || 0));
@@ -138,7 +138,7 @@ function renderHeatmap(wrapper, svgPath, partStats, acClass, onPartHover) {
     });
 
     // Gradient legend
-    const gradientId = `gradient-${acClass}`;
+    const gradientId = `gradient-${Array.isArray(acClass) ? acClass.join("-") : acClass}`;
     const defs = svg.append("defs");
     const linearGradient = defs.append("linearGradient").attr("id", gradientId);
 
@@ -242,4 +242,4 @@ export function createHeatmap(config) {
   const tooltipHandlers = setupTooltip();
 
   renderHeatmap(blueprintWrapper, svgPath, partStats, acClass, tooltipHandlers);
-}
+}   
