@@ -455,17 +455,14 @@ nav a:hover, nav a.active {
 /* ── Heatmap layout ─────────────────────────────────────────────────── */
 .heatmap-layout {
   display: flex;
-  gap: 1rem;
+  width: 100%;
   height: 100%;
-  align-items: flex-start;
 }
 
 .blueprint-wrapper {
-  flex: 0 0 55%;
+  flex: 1;             /* takes remaining space after the checkbox panel */
+  min-width: 0;        /* prevents flex overflow */
   height: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
 }
 
 /* ── Checkbox Group panel ─────────────────────────────────────────────────── */
