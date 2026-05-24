@@ -2,15 +2,15 @@
   <g fill="#e0e0e0" stroke="#333333" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round">
     
     <g id="STR_RAD">
-      <path d="M183,40 Q200,12 217,40 Z" fill="#d2d2d2" />
+      <path d="M183,40 Q200,12 217,40 Z"/>
     </g>
 
     <g id="STR_NOSE">
-      <path d="M183,40 L181,65 Q200,68 219,65 L217,40 Q200,43 183,40 Z" />
+      <path d="M183,40 L181,65 Q200,68 219,65 L217,40 L183,40 Z" />
     </g>
 
     <g id="STR_WINDSHLD">
-      <path d="M185,52 Q200,48 215,52 L212,57 Q200,53 188,57 Z" fill="#b0c4de" />
+      <path d="M185,52 Q200,48 215,52 L212,57 Q200,53 188,57 Z"/>
     </g>
 
     <g id="STR_FUSE">
@@ -20,40 +20,40 @@
     </g>
 
     <g id="STR_ENG1">
-      <line x1="133" y1="140" x2="133" y2="122" stroke-width="2" /> <rect x="125" y="122" width="16" height="32" rx="4" fill="#d5d5d5" />
+      <line x1="133" y1="140" x2="133" y2="122" stroke-width="2" /> <rect x="125" y="122" width="16" height="32" rx="4" />
     </g>
     
     <g id="STR_ENG3">
-      <line x1="83" y1="162" x2="83" y2="146" stroke-width="2" /> <rect x="76" y="146" width="14" height="28" rx="4" fill="#d5d5d5" />
+      <line x1="83" y1="162" x2="83" y2="146" stroke-width="2" /> <rect x="76" y="146" width="14" height="28" rx="4"/>
     </g>
 
     <g id="STR_ENG2">
-      <line x1="267" y1="140" x2="267" y2="122" stroke-width="2" /> <rect x="259" y="122" width="16" height="32" rx="4" fill="#d5d5d5" />
+      <line x1="267" y1="140" x2="267" y2="122" stroke-width="2" /> <rect x="259" y="122" width="16" height="32" rx="4"/>
     </g>
 
     <g id="STR_ENG4">
-      <line x1="317" y1="162" x2="317" y2="146" stroke-width="2" /> <rect x="310" y="146" width="14" height="28" rx="4" fill="#d5d5d5" />
+      <line x1="317" y1="162" x2="317" y2="146" stroke-width="2" /> <rect x="310" y="146" width="14" height="28" rx="4"/>
     </g>
 
     <g id="STR_PROP">
-      <ellipse cx="133" cy="122" rx="12" ry="3" fill="#4a5568" />
-      <circle cx="133" cy="122" r="1.5" fill="#ffffff" />
-      <ellipse cx="83" cy="146" rx="12" ry="2.5" fill="#4a5568" />
-      <circle cx="83" cy="146" r="1.2" fill="#ffffff" />
-      <ellipse cx="267" cy="122" rx="12" ry="3" fill="#4a5568" />
-      <circle cx="267" cy="122" r="1.5" fill="#ffffff" />
-      <ellipse cx="317" cy="146" rx="12" ry="2.5" fill="#4a5568" />
-      <circle cx="317" cy="146" r="1.2" fill="#ffffff" />
+      <ellipse cx="133" cy="122" rx="12" ry="3"/>
+      <circle cx="133" cy="122" r="1.5" fill="#4a5568" />
+      <ellipse cx="83" cy="146" rx="12" ry="2.5"/>
+      <circle cx="83" cy="146" r="1.2" fill="#4a5568" />
+      <ellipse cx="267" cy="122" rx="12" ry="3"/>
+      <circle cx="267" cy="122" r="1.5" fill="#4a5568" />
+      <ellipse cx="317" cy="146" rx="12" ry="2.5"/>
+      <circle cx="317" cy="146" r="1.2" fill="#4a5568" />
     </g>
 
     <g id="STR_LG">
       <line x1="181" y1="175" x2="177" y2="175" stroke="#333333" stroke-width="1.5" />
-      <rect x="170" y="169" width="4" height="12" rx="1" fill="#4a5568" stroke="#333333" stroke-width="1" />
-      <rect x="175" y="169" width="4" height="12" rx="1" fill="#4a5568" stroke="#333333" stroke-width="1" />
+      <rect x="170" y="169" width="4" height="12" rx="1" stroke="#333333" stroke-width="1" />
+      <rect x="175" y="169" width="4" height="12" rx="1" stroke="#333333" stroke-width="1" />
       
       <line x1="219" y1="175" x2="224" y2="175" stroke="#333333" stroke-width="1.5" />
-      <rect x="221" y="169" width="4" height="12" rx="1" fill="#4a5568" stroke="#333333" stroke-width="1" />
-      <rect x="226" y="169" width="4" height="12" rx="1" fill="#4a5568" stroke="#333333" stroke-width="1" />
+      <rect x="221" y="169" width="4" height="12" rx="1" stroke="#333333" stroke-width="1" />
+      <rect x="226" y="169" width="4" height="12" rx="1" stroke="#333333" stroke-width="1" />
     </g>
 
     <g id="STR_WING_ROT">
@@ -64,13 +64,13 @@
     <g id="STR_TAIL">
       <path d="M181,225 L135,258 L135,266 L181,240 Z" />
       <path d="M219,225 L265,258 L265,266 L219,240 Z" />
-      <path d="M198,215 L198,278 Q200,282 202,278 L202,215 Z" fill="#c5c5c5" />
+      <path d="M198,215 L198,278 Q200,282 202,278 L202,215 Z"/>
     </g>
 
     <g id="STR_LGHTS">
-      <circle cx="30" cy="190" r="2.5" fill="#d0d0d0" stroke="#222" stroke-width="0.8" />
-      <circle cx="370" cy="190" r="2.5" fill="#d0d0d0" stroke="#222" stroke-width="0.8" />
-      <circle cx="200" cy="281" r="2.5" fill="#d0d0d0" stroke="#222" stroke-width="0.8" />
+      <circle cx="30" cy="190" r="2.5" stroke="#222" stroke-width="0.8" />
+      <circle cx="370" cy="190" r="2.5" stroke="#222" stroke-width="0.8" />
+      <circle cx="200" cy="281" r="2.5" stroke="#222" stroke-width="0.8" />
     </g>
 
   </g>
