@@ -150,7 +150,7 @@ function renderHeatmap(wrapper, svgPath, partStats, acClass, onPartHover) {
 
     const legend = svg.append("g")
       .attr("class", "legend")
-      .attr("transform", "translate(20, 35)");
+      .attr("transform", "translate(20, 22)");
 
     legend.append("rect")
       .attr("width", 150).attr("height", 15)
