@@ -3,8 +3,25 @@ import * as d3 from 'd3';
 
 // ─── 1. DATA SETUP ────────────────────────────────────────────────────────────
 
+const PART_LABELS = {
+  STR_RAD:      "Radome",
+  STR_WINDSHLD: "Windshield",
+  STR_ENG1:     "Engine 1",
+  STR_ENG2:     "Engine 2",
+  STR_ENG3:     "Engine 3",
+  STR_ENG4:     "Engine 4",
+  STR_PROP:     "Propeller",
+  STR_WING_ROT: "Wing / Rotor",
+  STR_FUSE:     "Fuselage",
+  STR_LG:       "Landing Gear",
+  STR_TAIL:     "Tail",
+  STR_LGHTS:    "Lights",
+  STR_NOSE:     "Nose",
+  STR_OTHER:    "Other",
+};
+
 const COST_FIELDS = [
-  { key: "COST_OTHER_INFL_ADJ", label: "Costs", format: "currency" },
+  { key: "COST_OTHER_INFL_ADJ", label: "Total costs (inflation-adj.)", format: "currency" },
   { key: "NR_INJURIES",         label: "Injuries",                     format: "number"   },
   { key: "NR_FATALITIES",       label: "Fatalities",                   format: "number"   },
 ];
@@ -143,14 +160,10 @@ function setupTooltip() {
   }
 
   function buildTooltipHTML(part, stats) {
-    // Human-readable part label: strip the "STR_" prefix and title-case
-    const partLabel = part
-      .replace(/^STR_/, "")
-      .replace(/_/g, " ")
-      .replace(/\b\w/g, c => c.toUpperCase());
+    const partLabel = PART_LABELS[part] ?? part;
 
     let html = `<div class="tooltip-title">${partLabel}</div>`;
-    html += `<div class="tooltip-strikes">Total Strikes: <strong>${stats.strikes.toLocaleString()}</strong></div>`;
+    html += `<div class="tooltip-strikes">Total strikes: <strong>${stats.strikes.toLocaleString()}</strong></div>`;
     html += `<div class="tooltip-section-label">Totals</div>`;
 
     COST_FIELDS.forEach(({ key, label, format }) => {
