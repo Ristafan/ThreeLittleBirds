@@ -80,91 +80,91 @@
 
   <rect width="100%" height="100%" fill="#f4f7fa" />
 
-  <g transform="translate(0, 0)">
+  <g id="STR_ENG1" transform="translate(0, 0)">
     <rect x="10" y="10" width="190" height="190" rx="8" fill="#ffffff" stroke="#d0d0d0" stroke-width="1.5"/>
     <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_ENG1</text>
     <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">ENGINE 1</text>
     <use href="#engine_sym" x="105" y="125"/>
   </g>
 
-  <g transform="translate(210, 0)">
+  <g id="STR_ENG2" transform="translate(210, 0)">
     <rect x="10" y="10" width="190" height="190" rx="8" fill="#ffffff" stroke="#d0d0d0" stroke-width="1.5"/>
     <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_ENG2</text>
     <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">ENGINE 2</text>
     <use href="#engine_sym" x="105" y="125"/>
   </g>
 
-  <g transform="translate(420, 0)">
+  <g id="STR_ENG3" transform="translate(420, 0)">
     <rect x="10" y="10" width="190" height="190" rx="8" fill="#ffffff" stroke="#d0d0d0" stroke-width="1.5"/>
     <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_ENG3</text>
     <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">ENGINE 3</text>
     <use href="#engine_sym" x="105" y="125"/>
   </g>
 
-  <g transform="translate(630, 0)">
+  <g id="STR_ENG4" transform="translate(630, 0)">
     <rect x="10" y="10" width="190" height="190" rx="8" fill="#ffffff" stroke="#d0d0d0" stroke-width="1.5"/>
     <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_ENG4</text>
     <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">ENGINE 4</text>
     <use href="#engine_sym" x="105" y="125"/>
   </g>
 
-  <g transform="translate(0, 210)">
+  <g id="STR_PROP" transform="translate(0, 210)">
     <rect x="10" y="10" width="190" height="190" rx="8" fill="#ffffff" stroke="#d0d0d0" stroke-width="1.5"/>
     <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_PROP</text>
     <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">PROPELLER</text>
     <use href="#prop_sym" x="105" y="125"/>
   </g>
 
-  <g transform="translate(210, 210)">
+  <g id="STR_WING_ROT" transform="translate(210, 210)">
     <rect x="10" y="10" width="190" height="190" rx="8" fill="#ffffff" stroke="#d0d0d0" stroke-width="1.5"/>
     <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_WING_ROT</text>
     <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">WING / ROTOR</text>
     <use href="#wing_sym" x="105" y="125"/>
   </g>
 
-  <g transform="translate(420, 210)">
+  <g id="STR_FUSE" transform="translate(420, 210)">
     <rect x="10" y="10" width="190" height="190" rx="8" fill="#ffffff" stroke="#d0d0d0" stroke-width="1.5"/>
     <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_FUSE</text>
     <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">FUSELAGE</text>
     <use href="#fuse_sym" x="105" y="125"/>
   </g>
 
-  <g transform="translate(630, 210)">
+  <g id="STR_TAIL" transform="translate(630, 210)">
     <rect x="10" y="10" width="190" height="190" rx="8" fill="#ffffff" stroke="#d0d0d0" stroke-width="1.5"/>
     <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_TAIL</text>
     <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">EMPENNAGE / TAIL</text>
     <use href="#tail_sym" x="105" y="125"/>
   </g>
 
-  <g transform="translate(0, 420)">
+  <g id="STR_RAD" transform="translate(0, 420)">
     <rect x="10" y="10" width="190" height="190" rx="8" fill="#ffffff" stroke="#d0d0d0" stroke-width="1.5"/>
     <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_RAD</text>
     <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">RADOME</text>
     <use href="#rad_sym" x="105" y="115"/>
   </g>
 
-  <g transform="translate(210, 420)">
+  <g id="STR_NOSE" transform="translate(210, 420)">
     <rect x="10" y="10" width="190" height="190" rx="8" fill="#ffffff" stroke="#d0d0d0" stroke-width="1.5"/>
     <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_NOSE</text>
     <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">NOSE SECTION</text>
     <use href="#nose_sym" x="105" y="125"/>
   </g>
 
-  <g transform="translate(420, 420)">
+  <g id="STR_WINDSHLD" transform="translate(420, 420)">
     <rect x="10" y="10" width="190" height="190" rx="8" fill="#ffffff" stroke="#d0d0d0" stroke-width="1.5"/>
     <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_WINDSHLD</text>
     <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">WINDSHIELD</text>
     <use href="#windshld_sym" x="105" y="125"/>
   </g>
 
-  <g transform="translate(630, 420)">
+  <g id="STR_LG" transform="translate(630, 420)">
     <rect x="10" y="10" width="190" height="190" rx="8" fill="#ffffff" stroke="#d0d0d0" stroke-width="1.5"/>
     <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_LG</text>
     <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">LANDING GEAR</text>
     <use href="#lg_sym" x="105" y="125"/>
   </g>
 
-  <g transform="translate(0, 630)">
+  <g id="STR_LGHTS" transform="translate(0, 630)">
     <rect x="10" y="10" width="190" height="190" rx="8" fill="#ffffff" stroke="#d0d0d0" stroke-width="1.5"/>
     <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_LGHTS</text>
     <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">EXTERNAL LIGHTS</text>
