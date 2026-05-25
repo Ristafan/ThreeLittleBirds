@@ -254,7 +254,6 @@ function tickValues(domain, xKey) {
     const n = domain.length;
     if (n <= 15) return domain;
     if (xKey === "year") {
-        // show every 5th year
         return domain.filter(d => d % 5 === 0);
     }
     const step = Math.ceil(n / 12);
