@@ -40,10 +40,9 @@ export function getSliderFilter() {
         } else {
             if (month < mMin && month > mMax) return false;
         }
-
-        if (sliderState.sky      && d.SKY          !== sliderState.sky)      return false;
-        if (sliderState.phase    && d.PHASE_OF_FLIGHT !== sliderState.phase)  return false;
-        if (sliderState.timeofday && d.TIME_OF_DAY  !== sliderState.timeofday) return false;
+        if (sliderState.sky && !sliderState.sky.includes(d.SKY)) return false;
+        if (sliderState.phase && !sliderState.phase.includes(d.PHASE_OF_FLIGHT)) return false;
+        if (sliderState.timeofday && !sliderState.timeofday.includes(d.TIME_OF_DAY)) return false;
 
         return true;
     };
@@ -81,11 +80,11 @@ export function init_sliders(data, onChangeCallback) {
         const resetBtn = createElement('button', 'reset-btn');
         resetBtn.textContent = '↺ Reset';
         resetBtn.addEventListener('click', () => {
-            sliderState.year     = { min: dataMinYear, max: dataMaxYear };
-            sliderState.altitude = { min: 0, max: dataMaxAlt };
-            sliderState.month    = { min: 1, max: 12 };
-            sliderState.sky      = null;
-            sliderState.phase    = null;
+            sliderState.year      = { min: dataMinYear, max: dataMaxYear };
+            sliderState.altitude  = { min: 0, max: dataMaxAlt };
+            sliderState.month     = { min: 1, max: 12 };
+            sliderState.sky       = null;
+            sliderState.phase     = null;
             sliderState.timeofday = null;
             ready = false;
             container.innerHTML = '';
@@ -96,15 +95,19 @@ export function init_sliders(data, onChangeCallback) {
         topBar.appendChild(resetBtn);
         container.appendChild(topBar);
 
-        container.appendChild(makeSectionTitle('Numeric Filters'));
-        container.appendChild(makeDualSlider('Year', dataMinYear, dataMaxYear, 1, 'year', notify, v => v));
-        container.appendChild(makeDualSlider('Altitude', 0, dataMaxAlt, 500, 'altitude', notify, v => v.toLocaleString() + ' ft'));
-        container.appendChild(makeSectionTitle('Month Range'));
-        container.appendChild(makeCircularMonthPicker(notify));
+        // Numeric + month in a 2-col grid
+        container.appendChild(makeSectionTitle('Filters'));
+        const topGrid = createElement('div', 'sliders-top-grid');
+        topGrid.appendChild(makeDualSlider('Year',     dataMinYear, dataMaxYear, 1,   'year',     notify, v => v));
+        topGrid.appendChild(makeCircularMonthPicker(notify));
+        topGrid.appendChild(makeDualSlider('Altitude', 0,           dataMaxAlt,  500, 'altitude', notify, v => v.toLocaleString() + ' ft'));
+// month picker spans — it's already in row 1 col 2, so altitude goes row 2 col 1
+        container.appendChild(topGrid);
+
         container.appendChild(makeSectionTitle('Categorical Filters'));
-        container.appendChild(makeChipFilter('Sky', skies, 'sky', notify));
-        container.appendChild(makeChipFilter('Phase of Flight', phases, 'phase', notify));
-        container.appendChild(makeChipFilter('Time of Day', times, 'timeofday', notify));
+        container.appendChild(makeChipFilter('Sky',         skies,  'sky',       notify));
+        container.appendChild(makeChipFilter('Phase',       phases, 'phase',     notify));
+        container.appendChild(makeChipFilter('Time of Day', times,  'timeofday', notify));
     }
     buildUI();
     ready = true;
@@ -175,13 +178,13 @@ const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct'
 function makeCircularMonthPicker(notify) {
     const wrap = createElement('div', 'month-picker-wrap');
 
-    const SIZE   = 220;
+    const SIZE   = 160;
     const CX     = SIZE / 2;
     const CY     = SIZE / 2;
-    const R_OUTER = 85;
-    const R_INNER = 58;
-    const R_THUMB = 92;
-    const R_LABEL = 104;
+    const R_OUTER = 58;
+    const R_INNER = 40;
+    const R_THUMB = 64;
+    const R_LABEL = 74;
 
     const svgNS = 'http://www.w3.org/2000/svg';
     const svg   = document.createElementNS(svgNS, 'svg');
@@ -237,7 +240,7 @@ function makeCircularMonthPicker(notify) {
 
     function makeThumb(cls) {
         const g = document.createElementNS(svgNS, 'circle');
-        g.setAttribute('r', 9);
+        g.setAttribute('r', 5);
         g.setAttribute('class', cls);
         svg.appendChild(g);
         return g;
@@ -321,7 +324,8 @@ function makeCircularMonthPicker(notify) {
 
 function makeChipFilter(label, values, stateKey, notify) {
     const wrap = createElement('div', 'chip-block');
-    const sliderLabel  = createElement('div', 'slider-label'); sliderLabel.textContent = label;
+    const sliderLabel = createElement('div', 'slider-label');
+    sliderLabel.textContent = label;
     wrap.appendChild(sliderLabel);
 
     const chipRow = createElement('div', 'chip-row');
@@ -340,10 +344,16 @@ function makeChipFilter(label, values, stateKey, notify) {
         const chip = createElement('button', 'chip');
         chip.textContent = val;
         chip.addEventListener('click', () => {
-            allChip.classList.remove('active');
-            chips.forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-            sliderState[stateKey] = val;
+            chip.classList.toggle('active');
+
+            const selected = chips.filter(c => c.classList.contains('active'));
+            if (selected.length === 0) {
+                sliderState[stateKey] = null;
+                allChip.classList.add('active');
+            } else {
+                allChip.classList.remove('active');
+                sliderState[stateKey] = selected.map(c => c.textContent);
+            }
             notify();
         });
         chipRow.appendChild(chip);
@@ -353,10 +363,9 @@ function makeChipFilter(label, values, stateKey, notify) {
     wrap.appendChild(chipRow);
     return wrap;
 }
-
 function createElement(tag, cls) {
     const element = document.createElement(tag);
-    if (cls) element.className = cls;
+    element.className = cls;
     return element;
 }
 
