@@ -8,11 +8,10 @@ export const sliderState = {
     phase:   null,
     timeofday: null,
 
-    // for map clicks
     selection: {
-        active: false,   // whether a cluster selection is currently active
-        type: null,   // 'cluster' | null
-        ids: []       // list of selected feature IDs
+        active: false,
+        type: null,
+        ids: []
     },
 };
 
@@ -95,13 +94,11 @@ export function init_sliders(data, onChangeCallback) {
         topBar.appendChild(resetBtn);
         container.appendChild(topBar);
 
-        // Numeric + month in a 2-col grid
         container.appendChild(makeSectionTitle('Filters'));
         const topGrid = createElement('div', 'sliders-top-grid');
         topGrid.appendChild(makeDualSlider('Year',     dataMinYear, dataMaxYear, 1,   'year',     notify, v => v));
         topGrid.appendChild(makeCircularMonthPicker(notify));
         topGrid.appendChild(makeDualSlider('Altitude', 0,           dataMaxAlt,  500, 'altitude', notify, v => v.toLocaleString() + ' ft'));
-// month picker spans — it's already in row 1 col 2, so altitude goes row 2 col 1
         container.appendChild(topGrid);
 
         container.appendChild(makeSectionTitle('Categorical Filters'));

@@ -1,5 +1,3 @@
-import * as d3 from "d3";
-
 import { createBaseLayer, createPointsLayers, attachClusterClickHandler, updatePointsLayers, createMigrationLayer, createBirdSpeciesLayer } from './layers.js';
 import { clusterSource_from_data, migration_source_from_data } from './dataLoader.js';
 import { fromLonLat } from "ol/proj";
