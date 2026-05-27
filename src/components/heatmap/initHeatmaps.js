@@ -1,4 +1,4 @@
-import { createHeatmap } from "../secondary_vis";
+import { createHeatmap } from "./secondary_vis";
 import { initTabs } from "./initTabs";
 
 const heatmapConfigs = {

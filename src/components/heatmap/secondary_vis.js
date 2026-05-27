@@ -1,4 +1,3 @@
-// createHeatmap.js
 import * as d3 from 'd3';
 
 // ─── 1. MAPPINGS & FIELD DEFINITIONS ─────────────────────────────────────────
