@@ -663,128 +663,17 @@ nav a:hover, nav a.active {
 }
 
 .blueprint-wrapper {
+  overflow: visible;
+  pointer-events: all;
   flex: 1;
   min-width: 0;
   height: 100%;
 }
 
-<<<<<<< HEAD
-=======
-.heatmap-controls {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem 0;
-  overflow-y: auto;
-}
-
-.heatmap-controls h3 {
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--muted);
-  margin: 0 0 .25rem;
-}
-
-.checkbox-group {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  column-gap: .75rem;
-  row-gap: .4rem;
-}
-
-.checkbox-group-header {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 2px;
-}
-
-.checkbox-group-label {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #888;
-}
-
-.checkbox-group-toggle {
-  font-size: 10px;
-  color: #888;
-  background: none;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 1px 7px;
-  cursor: pointer;
-  transition: color var(--transition), border-color var(--transition);
-  line-height: 1.8;
-}
-
-.checkbox-group-toggle:hover { color: #333; border-color: #aaa; }
-
-.checkbox-row { display: flex; align-items: center; gap: 8px; }
-.checkbox-row span { font-size: 12px; color: #333; line-height: 1.3; }
-
-.checkbox-container { display: flex; justify-content: center; align-items: center; }
-.checkbox { display: none; }
-
-.checkbox-label {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.checkbox-flip {
-  width: 20px;
-  height: 20px;
-  perspective: 1000px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  transition: transform 0.4s ease;
-}
-
-.checkbox-front,
-.checkbox-back {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 7px;
-  backface-visibility: hidden;
-  transition: transform 0.3s ease;
-}
-
-.checkbox-front {
-  background: linear-gradient(135deg, #ff6347, #f76c6c);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transform: rotateY(0deg);
-}
-
-.checkbox-back {
-  background: linear-gradient(135deg, #36b54a, #00c1d4);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transform: rotateY(180deg);
-}
-
-.checkbox-wrapper:hover .checkbox-flip { transform: scale(1.1); }
-.checkbox:checked + .checkbox-label .checkbox-front { transform: rotateY(180deg); }
-.checkbox:checked + .checkbox-label .checkbox-back  { transform: rotateY(0deg); }
-.checkbox:focus  + .checkbox-label .checkbox-flip   { box-shadow: 0 0 15px rgba(54,181,73,.7); }
-
-.icon-path { stroke: white; stroke-width: 2; fill: transparent; }
-
->>>>>>> master
 /* ── Tooltip ────────────────────────────────────────────────────────── */
 .heatmap-tooltip {
-  position: absolute;
+  position: fixed;
+  z-index: 9999;
   visibility: hidden;
   background: rgba(255,255,255,.97);
   border: 1px solid var(--border);
@@ -793,7 +682,6 @@ nav a:hover, nav a.active {
   pointer-events: none;
   font-size: 12px;
   box-shadow: var(--shadow);
-  z-index: 1000;
   min-width: 180px;
   line-height: 1.8;
 }

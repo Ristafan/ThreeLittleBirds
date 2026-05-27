@@ -35,6 +35,17 @@ const COST_FIELDS = [
   { key: "NR_FATALITIES",       label: "Fatalities",                   format: "number"   },
 ];
 
+// ─── SVG CACHE ────────────────────────────────────────────────────────────────
+// Keyed by svgPath → Promise<XMLDocument>  (fetched once, reused forever)
+const svgXmlCache = new Map();
+
+function fetchSvgCached(svgPath) {
+  if (!svgXmlCache.has(svgPath)) {
+    svgXmlCache.set(svgPath, d3.xml(svgPath));
+  }
+  return svgXmlCache.get(svgPath);
+}
+
 // ─── 2. DATA SETUP ────────────────────────────────────────────────────────────
 
 /**
@@ -89,7 +100,51 @@ function setupData(data, acClass, parts) {
 // ─── 3. HEATMAP ───────────────────────────────────────────────────────────────
 
 function renderHeatmap(wrapper, svgPath, partStats, acClass, onPartHover) {
-  return d3.xml(svgPath).then(xml => {
+  // Re-use already-inserted SVG node if it exists
+  const existingNode = wrapper.node().querySelector("svg");
+
+  function applyColors(svgRoot) {
+    const svg = d3.select(svgRoot);
+    const maxTotal = d3.max(Object.values(partStats), d => d.total) || 1;
+    const colorScale = d3.scaleSequential()
+      .domain([0, maxTotal])
+      .interpolator(d3.interpolateYlOrRd);
+
+    // Update legend max label if present
+    svg.select(".legend-max").text(maxTotal.toLocaleString());
+
+    Object.entries(partStats).forEach(([svgKey, stats]) => {
+      const el = svg.select(`#${svgKey}`);
+      if (el.empty()) return;
+
+      el.transition()
+        .duration(1000)
+        .style("fill", stats.total > 0 ? colorScale(stats.total) : "#e0e0e0")
+        .style("stroke", "#333")
+        .style("stroke-width", "1px");
+
+      // Re-attach handlers (they capture the new stats via closure)
+      el.attr("cursor", "pointer")
+      .on("mouseover.tooltip", (event) => onPartHover.show(event, svgKey, stats))
+      .on("mousemove.tooltip", (event) => onPartHover.move(event))
+      .on("mouseout.tooltip",  ()      => onPartHover.hide())
+      .on("mouseover.stroke",  function() {
+        d3.select(this).style("stroke-width", "3px");
+      })
+      .on("mouseout.stroke",   function() {
+        d3.select(this).style("stroke-width", "1px");
+      });
+    });
+  }
+
+  if (existingNode) {
+    // SVG already in DOM — just recolor, no fetch needed
+    applyColors(existingNode);
+    return Promise.resolve();
+  }
+
+  // First render: fetch (or use cache) and insert the SVG
+  return fetchSvgCached(svgPath).then(xml => {
     const importedNode = document.importNode(xml.documentElement, true);
     const svg = d3.select(importedNode);
 
@@ -108,35 +163,7 @@ function renderHeatmap(wrapper, svgPath, partStats, acClass, onPartHover) {
 
     wrapper.node().appendChild(importedNode);
 
-    // Color scale is based on combined strikes + damages
-    const maxTotal = d3.max(Object.values(partStats), d => d.total) || 1;
-    const colorScale = d3.scaleSequential()
-      .domain([0, maxTotal])
-      .interpolator(d3.interpolateYlOrRd);
-
-    Object.entries(partStats).forEach(([svgKey, stats]) => {
-      const el = svg.select(`#${svgKey}`);
-      if (el.empty()) return;
-
-      el.transition()
-        .duration(1000)
-        .style("fill", stats.total > 0 ? colorScale(stats.total) : "#e0e0e0")
-        .style("stroke", "#333")
-        .style("stroke-width", "1px");
-
-      el.attr("cursor", "pointer")
-        .on("mouseover",  (event) => onPartHover.show(event, svgKey, stats))
-        .on("mousemove",  (event) => onPartHover.move(event))
-        .on("mouseout",   ()      => onPartHover.hide())
-        .on("mouseover.stroke", function() {
-          d3.select(this).style("stroke-width", "3px");
-        })
-        .on("mouseout.stroke", function() {
-          d3.select(this).style("stroke-width", "1px");
-        });
-    });
-
-    // Gradient legend
+    // Build gradient legend once
     const gradientId = `gradient-${Array.isArray(acClass) ? acClass.join("-") : acClass}`;
     const defs = svg.append("defs");
     const linearGradient = defs.append("linearGradient").attr("id", gradientId);
@@ -147,6 +174,7 @@ function renderHeatmap(wrapper, svgPath, partStats, acClass, onPartHover) {
       .attr("offset", d => `${d * 100}%`)
       .attr("stop-color", d => d3.interpolateYlOrRd(d));
 
+    const maxTotal = d3.max(Object.values(partStats), d => d.total) || 1;
     const legend = svg.append("g")
       .attr("class", "legend")
       .attr("transform", "translate(20, 22)");
@@ -157,12 +185,16 @@ function renderHeatmap(wrapper, svgPath, partStats, acClass, onPartHover) {
       .style("stroke", "#333");
 
     legend.append("text").attr("y", 30).style("font-size", "12px").text("0");
-    legend.append("text").attr("x", 150).attr("y", 30).attr("text-anchor", "end")
-      .style("font-size", "12px").text(`${maxTotal.toLocaleString()}`);
+    // Give the max label a class so applyColors() can update it on re-renders
+    legend.append("text").attr("x", 150).attr("y", 30)
+      .attr("text-anchor", "end")
+      .attr("class", "legend-max")
+      .style("font-size", "12px")
+      .text(maxTotal.toLocaleString());
     legend.append("text").attr("y", -10).style("font-weight", "bold")
       .text("Strike/Damage Intensity");
 
-    return svg;
+    applyColors(importedNode);
   });
 }
 
@@ -202,21 +234,39 @@ function setupTooltip() {
 
   return {
     show(event, svgKey, stats) {
+      const tooltipNode = tooltip.node();
+      const tw = tooltipNode.offsetWidth  || 200;
+      const th = tooltipNode.offsetHeight || 120;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      const x = Math.min(event.clientX + 15, vw - tw - 10);
+      const y = Math.min(event.clientY + 15, vh - th - 10);
+
       tooltip
         .html(buildTooltipHTML(svgKey, stats))
         .style("visibility", "visible")
-        .style("top",  (event.pageY + 15) + "px")
-        .style("left", (event.pageX + 15) + "px");
+        .style("left", x + "px")
+        .style("top",  y + "px");
     },
     move(event) {
+      const tooltipNode = tooltip.node();
+      const tw = tooltipNode.offsetWidth  || 200;
+      const th = tooltipNode.offsetHeight || 120;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      const x = Math.min(event.clientX + 15, vw - tw - 10);
+      const y = Math.min(event.clientY + 15, vh - th - 10);
+
       tooltip
-        .style("top",  (event.pageY + 15) + "px")
-        .style("left", (event.pageX + 15) + "px");
+        .style("left", x + "px")
+        .style("top",  y + "px");
     },
     hide() {
-      tooltip.style("visibility", "hidden");
+    tooltip.style("visibility", "hidden");
     },
-  };
+  }
 }
 
 // ─── PUBLIC API ───────────────────────────────────────────────────────────────
@@ -232,13 +282,19 @@ function setupTooltip() {
 export function createHeatmap(config) {
   const { containerId, svgPath, acClass, parts, data } = config;
   const container = d3.select(containerId);
-  container.selectAll("*").remove();
 
-  const layout = container.append("div").attr("class", "heatmap-layout");
-  const blueprintWrapper = layout.append("div").attr("class", "blueprint-wrapper");
+  // Only build the layout shell once; preserve existing SVG across updates
+  let layout = container.select(".heatmap-layout");
+  if (layout.empty()) {
+    layout = container.append("div").attr("class", "heatmap-layout");
+  }
+  let blueprintWrapper = layout.select(".blueprint-wrapper");
+  if (blueprintWrapper.empty()) {
+    blueprintWrapper = layout.append("div").attr("class", "blueprint-wrapper");
+  }
 
   const partStats = setupData(data, acClass, parts);
   const tooltipHandlers = setupTooltip();
 
   renderHeatmap(blueprintWrapper, svgPath, partStats, acClass, tooltipHandlers);
-}   
+}
