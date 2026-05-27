@@ -4,34 +4,18 @@ import { initTabs } from "./initTabs";
 const heatmapConfigs = {
   "Airplane": {
     svgPath: "/data/images/airplane.svg",
-    acClass: "A",
-    parts: ["STR_RAD", "STR_WINDSHLD", "STR_ENG1", "STR_ENG2", "STR_FUSE", "STR_WING_ROT", "STR_TAIL"]
+    acClass: ["A"],
+    parts: ['STR_RAD', 'DAM_RAD', 'STR_WINDSHLD', 'DAM_WINDSHLD', 'STR_NOSE', 'DAM_NOSE', 'STR_ENG1', 'DAM_ENG1', 'STR_ENG2', 'DAM_ENG2', 'STR_ENG3', 'DAM_ENG3', 'STR_ENG4', 'DAM_ENG4', 'STR_PROP', 'DAM_PROP', 'STR_WING_ROT', 'DAM_WING_ROT', 'STR_FUSE', 'DAM_FUSE', 'STR_LG', 'DAM_LG', 'STR_TAIL', 'DAM_TAIL', 'STR_LGHTS', 'DAM_LGHTS']
   },
   "Helicopter": {
     svgPath: "/data/images/helicopter.svg",
-    acClass: "B",
-    parts: ["STR_RAD", "STR_WINDSHLD", "STR_ENG1", "STR_ENG2", "STR_ENG3", "STR_ENG4", "STR_PROP", "STR_WING_ROT", "STR_FUSE", "STR_LG", "STR_TAIL", "STR_LGHTS"]
+    acClass: ["B"],
+    parts: ['STR_RAD', 'DAM_RAD', 'STR_WINDSHLD', 'DAM_WINDSHLD', 'STR_NOSE', 'DAM_NOSE', 'STR_ENG1', 'DAM_ENG1', 'STR_ENG2', 'DAM_ENG2', 'STR_ENG3', 'DAM_ENG3', 'STR_ENG4', 'DAM_ENG4', 'STR_PROP', 'DAM_PROP', 'STR_WING_ROT', 'DAM_WING_ROT', 'STR_FUSE', 'DAM_FUSE', 'STR_LG', 'DAM_LG', 'STR_TAIL', 'DAM_TAIL', 'STR_LGHTS', 'DAM_LGHTS']
   },
-  "Glider": {
-    svgPath: "/data/images/glider.svg",
-    acClass: "C",
-    parts: ["STR_RAD", "STR_WINDSHLD", "STR_FUSE", "STR_TAIL"]
-  },
-  "Balloon": {
-    svgPath: "/data/images/balloon.svg",
-    acClass: "D",
-    parts: ["STR_FUSE", "STR_LG"]
-  },
-  // Missing Dirigible
-  "Gyroplane": {
-    svgPath: "/data/images/gyroplane.svg",
-    acClass: "F",
-    parts: ["STR_RAD", "STR_WINDSHLD", "STR_ENG1", "STR_ENG2", "STR_ENG3", "STR_ENG4", "STR_PROP", "STR_WING_ROT", "STR_FUSE", "STR_LG", "STR_TAIL", "STR_LGHTS"]
-  },
-  "Ultralight": {
-    svgPath: "/data/images/ultralight.svg",
-    acClass: "G",
-    parts: ["STR_RAD", "STR_WINDSHLD", "STR_ENG1", "STR_ENG2", "STR_ENG3", "STR_ENG4", "STR_PROP", "STR_WING_ROT", "STR_FUSE", "STR_LG", "STR_TAIL", "STR_LGHTS"]
+  "Other": {
+    svgPath: "/data/images/other.svg",
+    acClass: ["C", "D", "F", "I", "J", "Y", "Z"],
+    parts: ['STR_RAD', 'DAM_RAD', 'STR_WINDSHLD', 'DAM_WINDSHLD', 'STR_NOSE', 'DAM_NOSE', 'STR_ENG1', 'DAM_ENG1', 'STR_ENG2', 'DAM_ENG2', 'STR_ENG3', 'DAM_ENG3', 'STR_ENG4', 'DAM_ENG4', 'STR_PROP', 'DAM_PROP', 'STR_WING_ROT', 'DAM_WING_ROT', 'STR_FUSE', 'DAM_FUSE', 'STR_LG', 'DAM_LG', 'STR_TAIL', 'DAM_TAIL', 'STR_LGHTS', 'DAM_LGHTS']
   }
 };
 
