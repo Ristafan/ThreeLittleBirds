@@ -99,7 +99,7 @@ function setupData(data, acClass, parts) {
 
 // ─── 3. HEATMAP ───────────────────────────────────────────────────────────────
 
-function renderHeatmap(wrapper, svgPath, partStats, acClass, onPartHover) {
+function renderHeatmap(wrapper, svgPath, partStats, acClass, onPartHover, legendOffset = { x: 20, y: 22 }) {
   // Re-use already-inserted SVG node if it exists
   const existingNode = wrapper.node().querySelector("svg");
 
@@ -176,8 +176,8 @@ function renderHeatmap(wrapper, svgPath, partStats, acClass, onPartHover) {
 
     const maxTotal = d3.max(Object.values(partStats), d => d.total) || 1;
     const legend = svg.append("g")
-      .attr("class", "legend")
-      .attr("transform", "translate(20, 22)");
+    .attr("class", "legend")
+    .attr("transform", `translate(${legendOffset.x}, ${legendOffset.y})`);
 
     legend.append("rect")
       .attr("width", 150).attr("height", 15)
@@ -280,7 +280,7 @@ function setupTooltip() {
  * @param {Array}  config.data        - The loaded CSV data
  */
 export function createHeatmap(config) {
-  const { containerId, svgPath, acClass, parts, data } = config;
+  const { containerId, svgPath, acClass, parts, data, legendOffset = { x: 20, y: 22 } } = config;
   const container = d3.select(containerId);
 
   // Only build the layout shell once; preserve existing SVG across updates
@@ -296,5 +296,5 @@ export function createHeatmap(config) {
   const partStats = setupData(data, acClass, parts);
   const tooltipHandlers = setupTooltip();
 
-  renderHeatmap(blueprintWrapper, svgPath, partStats, acClass, tooltipHandlers);
+  renderHeatmap(blueprintWrapper, svgPath, partStats, acClass, tooltipHandlers, legendOffset);
 }
