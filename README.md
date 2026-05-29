@@ -52,7 +52,7 @@ Hovering the mouse over the different sections will give extra information inclu
 
 The final visualization is a condensed view of the data in the form of an interactive barplot. The x axis can be adjusted for different temporal scales including year, month, day, time of day, and phase of flight. The y axis can be switched between strike cout and finacial cost. The mean and median are also displalyed and can be toggled on and off. And finally, the whole barchart can be exported as a png with the simple click of a button.
 
-Note: Feel free to click the play button on the bottom right of the screen to hear a custom, home-made, version of Kenny Loggins' "Danger Zone". (We had fun during this project)
+Note: Feel free to click the play button on the bottom right of the screen to hear a custom, home-made, version of Kenny Loggins' "Danger Zone" (We had fun during this project).
 
 ## Setup
 
