@@ -58,19 +58,6 @@ Note: Feel free to click the play button on the bottom right of the screen to he
 
 This project uses Webpack, Babel, and D3.js. To ensure we are all working in the same environment, follow these steps to set up the project locally.
 
-### 1. Prerequisites
-
-Ensure you have Node.js installed (LTS version recommended). This includes npm, our package manager.
-
-You can verify your installation with:
-
-```bash
-node -v
-npm -v
-```
-
----
-
 ## Running with Docker
 
 If you prefer to run the project in a containerized environment, you can use Docker.
@@ -119,7 +106,7 @@ docker stop birds-app
 
 ---
 
-### 2. Initial Setup
+### 1. Initial Setup
 
 Clone the repository and install the dependencies defined in `package.json`:
 
@@ -136,7 +123,7 @@ npm install
 
 ---
 
-### 3. Local Development
+### 2. Local Development
 
 To start the development server with Hot Module Replacement (HMR), run:
 
@@ -149,7 +136,7 @@ npm start # To run on a specific port you can add "-- --port portnumber"
 
 ---
 
-### 4. Project Structure
+### 3. Project Structure
 
 - `src/main.js`: The entry point for our JavaScript.
 - `src/index.html`: The main HTML template.
@@ -158,7 +145,7 @@ npm start # To run on a specific port you can add "-- --port portnumber"
 
 ---
 
-### 5. Deployment
+### 4. Deployment
 
 We use Continuous Deployment via Vercel.
 
