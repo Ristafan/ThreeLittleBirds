@@ -1,8 +1,4 @@
-/* =========================================================
-   Three Little Birds – stylesheet
-   ========================================================= */
-
-   /* ── Reset & base ──────────────────────────────────────── */
+/* ── Reset & base ──────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -293,7 +289,6 @@ nav a:hover, nav a.active {
   box-sizing: border-box;
 }
 
-/* Checkbox for migration routes */
 .migration-checkbox {
   display: inline-flex;
   align-items: center;

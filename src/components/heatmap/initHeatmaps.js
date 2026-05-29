@@ -1,4 +1,4 @@
-import { createHeatmap } from "./secondary_vis";
+import { createHeatmap } from "./createHeatmap";
 import { initTabs } from "./initTabs";
 
 const heatmapConfigs = {
@@ -22,19 +22,16 @@ const heatmapConfigs = {
   }
 };
 
-// Track which heatmaps have already been initialized to avoid redundant re-renders
 const initializedHeatmaps = new Set();
 
 export function init_heatmaps(data) {
   let currentData = data;
   initTabs();
 
-    // Helper to render a specific tab's heatmap
     function renderHeatmapForTab(tabId) {
       const config = heatmapConfigs[tabId];
       if (!config) return;
 
-      // always re-render with new data, remove initialized guard for updates
       createHeatmap({
         containerId: `#${tabId}`,
         svgPath: config.svgPath,
@@ -49,7 +46,6 @@ export function init_heatmaps(data) {
         console.log(`Heatmap initialized for: ${tabId}`);
       }
 
-    // Add Event Listeners to radio buttons
     const radioInputs = document.querySelectorAll('input[name="aircraft-tab"]');
     
     radioInputs.forEach(input => {
@@ -59,7 +55,6 @@ export function init_heatmaps(data) {
       });
     });
 
-    // Initial Check: Render the tab that is checked by default on page load
     const checkedRadio = document.querySelector('input[name="aircraft-tab"]:checked');
     if (checkedRadio) {
       renderHeatmapForTab(checkedRadio.getAttribute('data-target'));

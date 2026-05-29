@@ -1,7 +1,5 @@
 import * as d3 from 'd3';
 
-// ─── 1. MAPPINGS & FIELD DEFINITIONS ─────────────────────────────────────────
-
 const PART_LABELS = {
   STR_RAD:      "Radome",
   STR_WINDSHLD: "Windshield",
@@ -19,14 +17,11 @@ const PART_LABELS = {
   STR_OTHER:    "Other",
 };
 
-/** Maps any DAM_* or ING_* key back to its SVG element (STR_* key). */
 function toSvgKey(partKey) {
   return partKey.replace(/^(DAM|ING)_/, "STR_");
 }
 
-/** Returns true if a key represents a strike event. */
 const isStrike  = key => key.startsWith("STR_");
-/** Returns true if a key represents a damage event. */
 const isDamage  = key => key.startsWith("DAM_");
 
 const COST_FIELDS = [
@@ -35,8 +30,6 @@ const COST_FIELDS = [
   { key: "NR_FATALITIES",       label: "Fatalities",                   format: "number"   },
 ];
 
-// ─── SVG CACHE ────────────────────────────────────────────────────────────────
-// Keyed by svgPath → Promise<XMLDocument>  (fetched once, reused forever)
 const svgXmlCache = new Map();
 
 function fetchSvgCached(svgPath) {
@@ -46,13 +39,6 @@ function fetchSvgCached(svgPath) {
   return svgXmlCache.get(svgPath);
 }
 
-// ─── 2. DATA SETUP ────────────────────────────────────────────────────────────
-
-/**
- * Filters the dataset by aircraft class and aggregates per SVG-part statistics.
- * Groups DAM_* and ING_* counts back onto their STR_* svg key.
- * Returns a plain object keyed by SVG part ID (STR_*).
- */
 function setupData(data, acClass, parts) {
   const filteredData = data.filter(d => acClass.includes(d.AC_CLASS));
 
@@ -65,12 +51,10 @@ function setupData(data, acClass, parts) {
       return val === "TRUE" || val === "1";
     }).length;
 
-  // Derive the unique SVG keys (STR_*) from the parts list
   const svgKeys = [...new Set(parts.map(toSvgKey))];
 
   const partStats = {};
   svgKeys.forEach(svgKey => {
-    // Find which parts in the config map to this svg element
     const relatedParts = parts.filter(p => toSvgKey(p) === svgKey);
     const strikeParts  = relatedParts.filter(isStrike);
     const damageParts  = relatedParts.filter(isDamage);
@@ -78,7 +62,6 @@ function setupData(data, acClass, parts) {
     const strikes = strikeParts.reduce((sum, p) => sum + countRows(p), 0);
     const damages = damageParts.reduce((sum, p) => sum + countRows(p), 0);
 
-    // Cost/casualty fields are aggregated over the strike rows (primary event)
     const strikeRows = strikeParts.flatMap(p =>
       filteredData.filter(d => {
         const val = String(d[p]).trim().toUpperCase();
@@ -97,10 +80,8 @@ function setupData(data, acClass, parts) {
   return partStats;
 }
 
-// ─── 3. HEATMAP ───────────────────────────────────────────────────────────────
 
 function renderHeatmap(wrapper, svgPath, partStats, acClass, onPartHover, legendOffset = { x: 20, y: 22 }) {
-  // Re-use already-inserted SVG node if it exists
   const existingNode = wrapper.node().querySelector("svg");
 
   function applyColors(svgRoot) {
@@ -110,7 +91,6 @@ function renderHeatmap(wrapper, svgPath, partStats, acClass, onPartHover, legend
       .domain([0, maxTotal])
       .interpolator(d3.interpolateYlOrRd);
 
-    // Update legend max label if present
     svg.select(".legend-max").text(maxTotal.toLocaleString());
 
     Object.entries(partStats).forEach(([svgKey, stats]) => {
@@ -123,7 +103,6 @@ function renderHeatmap(wrapper, svgPath, partStats, acClass, onPartHover, legend
         .style("stroke", "#333")
         .style("stroke-width", "1px");
 
-      // Re-attach handlers (they capture the new stats via closure)
       el.attr("cursor", "pointer")
       .on("mouseover.tooltip", (event) => onPartHover.show(event, svgKey, stats))
       .on("mousemove.tooltip", (event) => onPartHover.move(event))
@@ -138,12 +117,10 @@ function renderHeatmap(wrapper, svgPath, partStats, acClass, onPartHover, legend
   }
 
   if (existingNode) {
-    // SVG already in DOM — just recolor, no fetch needed
     applyColors(existingNode);
     return Promise.resolve();
   }
 
-  // First render: fetch (or use cache) and insert the SVG
   return fetchSvgCached(svgPath).then(xml => {
     const importedNode = document.importNode(xml.documentElement, true);
     const svg = d3.select(importedNode);
@@ -163,7 +140,6 @@ function renderHeatmap(wrapper, svgPath, partStats, acClass, onPartHover, legend
 
     wrapper.node().appendChild(importedNode);
 
-    // Build gradient legend once
     const gradientId = `gradient-${Array.isArray(acClass) ? acClass.join("-") : acClass}`;
     const defs = svg.append("defs");
     const linearGradient = defs.append("linearGradient").attr("id", gradientId);
@@ -185,7 +161,6 @@ function renderHeatmap(wrapper, svgPath, partStats, acClass, onPartHover, legend
       .style("stroke", "#333");
 
     legend.append("text").attr("y", 30).style("font-size", "12px").text("0");
-    // Give the max label a class so applyColors() can update it on re-renders
     legend.append("text").attr("x", 150).attr("y", 30)
       .attr("text-anchor", "end")
       .attr("class", "legend-max")
@@ -197,8 +172,6 @@ function renderHeatmap(wrapper, svgPath, partStats, acClass, onPartHover, legend
     applyColors(importedNode);
   });
 }
-
-// ─── 4. TOOLTIP ───────────────────────────────────────────────────────────────
 
 const fmtCurrency = new Intl.NumberFormat("en-US", {
   style: "currency", currency: "USD", maximumFractionDigits: 0
@@ -268,22 +241,10 @@ function setupTooltip() {
     },
   }
 }
-
-// ─── PUBLIC API ───────────────────────────────────────────────────────────────
-
-/**
- * @param {Object} config
- * @param {string} config.containerId - The ID of the tab (e.g., "#Airplane")
- * @param {string} config.svgPath     - Path to the SVG file
- * @param {string} config.acClass     - The AC_CLASS filter (e.g., "A", "H")
- * @param {Array}  config.parts       - Array of part IDs (STR_*, DAM_*, ING_*)
- * @param {Array}  config.data        - The loaded CSV data
- */
 export function createHeatmap(config) {
   const { containerId, svgPath, acClass, parts, data, legendOffset = { x: 20, y: 22 } } = config;
   const container = d3.select(containerId);
 
-  // Only build the layout shell once; preserve existing SVG across updates
   let layout = container.select(".heatmap-layout");
   if (layout.empty()) {
     layout = container.append("div").attr("class", "heatmap-layout");

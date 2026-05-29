@@ -16,10 +16,8 @@ const state = {
 };
 
 export async function init_visualizations() {
-  // ensure initial render completes before heavy lifting
   await new Promise(requestAnimationFrame);
 
-  // fetch data concurrently to reduce loading times
   [state.data, state.migration_data] = await Promise.all([
     d3.csv('data/STRIKE_REPORTS_CLEAN.csv'),
     d3.csv('data/Bird_migration_dataset_renamed_CLEAN.csv')
@@ -30,14 +28,14 @@ export async function init_visualizations() {
     update_visualizations(filterFn);
   });
 
-  const map_worker = new Worker(
-    new URL('./workers/map_worker.js', import.meta.url),
+  const mapWorker = new Worker(
+    new URL('./workers/mapWorkers.js', import.meta.url),
     { type: 'module' }
   );
 
-  map_worker.postMessage(state.data);
+  mapWorker.postMessage(state.data);
 
-  map_worker.onmessage = (e) => {
+  mapWorker.onmessage = (e) => {
     state.mapData = e.data;
 
     document.querySelectorAll('.vis-loader').forEach(el => el.remove());
@@ -50,7 +48,6 @@ export async function init_visualizations() {
     }, 0);
   };
 
-  // toggle layer visibility based on checkbox state
   document.getElementById('toggleMigration').addEventListener('change', (e) => {
     const layer = state.map.getLayers().getArray()
       .find(l => l.get('id') === MIGRATION_LAYER_ID);
@@ -77,7 +74,6 @@ export function update_visualizations(filterFn) {
   if (!state.data) return;
   const baseFiltered = state.data.filter(filterFn);
   const filtered = applyClusterSelection(baseFiltered);
-  console.log('Filtered rows:', filtered.length);
 
   const filteredIds = new Set(
   filtered.map(d => String(d.INDEX_NR).trim())

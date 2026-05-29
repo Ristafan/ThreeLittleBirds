@@ -20,10 +20,9 @@ export function init_map(data, migration_data, targetId = "primary-vis", layers 
       controls: [new Attribution({ 
         collapsible: true,
         collapsed: true 
-      })] // add attribution control, set to collapsible to save space
+      })]
   });
 
-  // Load data and add points layer
   async function initializeDataLayer() {
       const clusterSource = await clusterSource_from_data(data);
       createPointsLayers(map);

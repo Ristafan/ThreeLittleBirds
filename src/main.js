@@ -1,19 +1,11 @@
-/* =========================================================
-   Three Little Birds – main.js
-   Lightweight enhancements: active nav link highlighting
-   on scroll, lazy-image fade-in.
-   ========================================================= */
-import * as d3 from 'd3';
 import './styles/main.css';
 import { init_visualizations } from './components/init_and_update.js';
 
 (function () {
   'use strict';
 
-  /* ── Initialize visualizations ─────────────────────────── */
   init_visualizations();
 
-  /* ── Active nav link on scroll ────────────────────────── */
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('nav a');
 
@@ -36,9 +28,8 @@ import { init_visualizations } from './components/init_and_update.js';
   }
 
   window.addEventListener('scroll', updateActiveLink, { passive: true });
-  updateActiveLink(); // run once on load
+  updateActiveLink();
 
-  /* ── Intersection Observer: fade-in cards & EDA blocks ─ */
   const fadeTargets = document.querySelectorAll('.card, .eda-block');
 
   if ('IntersectionObserver' in window) {

@@ -34,7 +34,7 @@ export function createMigrationLayer(map, vectorSource) {
 
   if (existingLayer) {
     existingLayer.setSource(vectorSource);
-    existingLayer.changed(); // ensures re-render if needed
+    existingLayer.changed();
     return;
   }
   const migrationLayer = new WebGLVectorLayer({
@@ -51,7 +51,6 @@ export function createMigrationLayer(map, vectorSource) {
   migrationLayer.setZIndex(30);
   map.addLayer(migrationLayer);
 
-  // add click interaction to highlight selected migration route
   const selectedFeatures = new Set();
 
   map.on('click', event => {
@@ -61,9 +60,8 @@ export function createMigrationLayer(map, vectorSource) {
     map.forEachFeatureAtPixel(event.pixel, feature => {
       clickedAnyFeature = true;
 
-        // already selected -> deselect
         if (selectedFeatures.has(feature)) {
-          const color = feature.get('color') || [0, 0, 0, 0.2]; // default to semi-transparent black if no color set, avoids issues if color property is missing for some reason
+          const color = feature.get('color') || [0, 0, 0, 0.2];
           const baseColor = color.slice(0, 3);
           feature.set('color', [...baseColor, 0.2]);
           feature.set('width', 1.5);
@@ -72,7 +70,6 @@ export function createMigrationLayer(map, vectorSource) {
           selectedFeatures.delete(feature);
 
         } else {
-          // newly selected -> highlight
           const color = feature.get('color') || [0, 0, 0, 0.2];
           const baseColor = color.slice(0, 3);
           feature.set('color', [...baseColor, 1.0]);
@@ -88,7 +85,6 @@ export function createMigrationLayer(map, vectorSource) {
       migrationLayer.changed();
 
       if (!clickedAnyFeature) {
-      // Clear selection if click on empty space
       selectedFeatures.forEach(feature => {
         feature.set('opacity', 0.15);
         feature.set('width', 1.5);
@@ -104,7 +100,7 @@ export function createBirdSpeciesLayer(map, vectorSource) {
     style: feature => {
 
       if (!feature.get('selected')) {
-        return null; // only label selected feature
+        return null;
       }
 
       return new Style({
@@ -135,11 +131,10 @@ export function createBirdSpeciesLayer(map, vectorSource) {
 }
 
 export function createPointsLayers(map) {
-  // prevent duplicates
   if (map.get('pointsLayers')) return map.get('pointsLayers');
 
   const pointsLayer = new WebGLVectorLayer({
-    source: null, // set later
+    source: null,
     style: {
       'circle-radius': [
         'interpolate',
@@ -223,14 +218,11 @@ export function updatePointsLayers(map, clusterSource) {
 
   let { pointsLayer, labelLayer } = layers;
 
-  // Find the current z-index before removing
   const zIndex = pointsLayer.getZIndex();
 
-  // Dispose GPU resources before removing
   pointsLayer.dispose();
   map.removeLayer(pointsLayer);
 
-  // Recreate with same style
   pointsLayer = new WebGLVectorLayer({
     source: clusterSource,
     style: {
@@ -273,10 +265,9 @@ export function updatePointsLayers(map, clusterSource) {
   });
 
   pointsLayer.set('id', POINTS_LAYER_ID);
-  pointsLayer.setZIndex(zIndex); // preserve z-index explicitly
+  pointsLayer.setZIndex(zIndex);
 
-  map.addLayer(pointsLayer);     // addLayer respects zIndex — no insertAt needed
-
+  map.addLayer(pointsLayer);
   labelLayer.setSource(clusterSource);
 
   // Update stored reference

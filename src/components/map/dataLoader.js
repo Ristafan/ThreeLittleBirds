@@ -1,11 +1,11 @@
 import * as d3 from 'd3';
 
-import { fromLonLat } from "ol/proj";
+import {fromLonLat} from "ol/proj";
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import VectorSource from 'ol/source/Vector';
 import Cluster from 'ol/source/Cluster';
-import { LineString } from 'ol/geom';
+import {LineString} from 'ol/geom';
 
 export async function clusterSource_from_data(data) {
   const validData = data.filter(d =>
@@ -13,7 +13,6 @@ export async function clusterSource_from_data(data) {
     Number.isFinite(d.lat) &&
     !(d.lon === 0 && d.lat === 0)
   );
-// convert each data point to an OpenLayers Feature with a Point geometry
   const features = validData.map(d => {
     return new Feature({
       id: d.id,
@@ -22,26 +21,22 @@ export async function clusterSource_from_data(data) {
     });
   });
 
-  // create a cluster source that groups nearby points together
-  const clusterSource = new Cluster({
-    distance: 30, // adjust this distance to control how close points need to be to be clustered together, in pixels
-    source: new VectorSource({ features }),
-    createCluster : function (point, features) {
+  return new Cluster({
+    distance: 30,
+    source: new VectorSource({features}),
+    createCluster: function (point, features) {
       return new Feature({
         geometry: point,
         features: features,
-        size: features.length, // add a 'size' property to indicate how many points are in this cluster, used for styling
-        idx: features.map(f => f.get('id')) // add an 'idx' property that contains the IDs of the original points in this cluster, used for filtering
+        size: features.length,
+        idx: features.map(f => f.get('id'))
       });
     }
   });
-
-  return clusterSource;
 }
 
 export function migration_source_from_data(data) {
 
-  // filter out any routes or IDs that are known to be problematic based on the exploration phase, e.g. routes with large jumps that likely indicate data quality issues
   const excludedRoutes = new Set(["NA", "1418.0"]);
   const excludedIds = new Set(["NA", "775.0", "42766.0", "42660.0" , "42686.0"]);
 
@@ -50,7 +45,6 @@ export function migration_source_from_data(data) {
     !excludedIds.has(d["ID"])
   );
 
-  // group data points by migratory route code
   const grouped = {};
   filtered.forEach(d => {
     const key = `${d["English Name"]}_${d["Migratory route codes"]}`;
@@ -59,7 +53,6 @@ export function migration_source_from_data(data) {
     grouped[key].push(d);
   });
 
-  // Assign a unique color to each species (you can customize this color mapping as needed)
   const speciesColors = {};
   let colorIndex = 0;
   Object.keys(grouped).forEach(key => {
@@ -74,19 +67,17 @@ export function migration_source_from_data(data) {
   });
 
 
-  // convert each group of points into a LineString feature representing the migration route
   const features = Object.values(grouped).map(points => {
     
     points.sort((a,b) => a.ID - b.ID);
 
-    let previous_lon = null; // track the previous longitude to detect dateline crossings
+    let previous_lon = null;
 
     const coords = points.map(d => {
 
       let lon = +d.GPS_xx;
       let lat = +d.GPS_yy;
 
-      // If the route crosses the dateline, adjust longitudes to ensure the LineString is drawn correctly (e.g. if median longitude is positive but some points are negative, add 360 to those points to keep them in the same range)
       if (previous_lon !== null) {
         let delta = lon-previous_lon;
         if (delta > 180) {
@@ -96,7 +87,7 @@ export function migration_source_from_data(data) {
         }
       }
 
-      previous_lon = lon; // update previous longitude for next iteration
+      previous_lon = lon;
       
       return fromLonLat([lon, lat]);
     });
