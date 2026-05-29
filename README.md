@@ -56,6 +56,15 @@ Note: Feel free to click the play button on the bottom right of the screen to he
 
 ## Setup
 
+### Project Structure
+
+- `src/main.js`: The entry point for our JavaScript.
+- `src/index.html`: The main HTML template.
+- `src/components/`: Place individual visualization logic here.
+- `src/assets/`: Store data files (CSV/JSON) here.
+
+---
+
 ### 1. Initial Setup
 
 Clone the repository and install the dependencies defined in `package.json`:
@@ -86,16 +95,8 @@ npm start # To run on a specific port you can add "-- --port portnumber"
 
 ---
 
-### 3. Project Structure
 
-- `src/main.js`: The entry point for our JavaScript.
-- `src/index.html`: The main HTML template.
-- `src/components/`: Place individual visualization logic here.
-- `src/assets/`: Store data files (CSV/JSON) here.
-
----
-
-### 4. Deployment
+### 3. Deployment
 
 We use Continuous Deployment via Vercel.
 
@@ -149,7 +150,7 @@ docker ps
 docker stop birds-app
 ```
 
-## Extra (Past Milestones)
+## Milestones
 
 [Milestone 1](#milestone-1) • [Milestone 2](#milestone-2)
 
@@ -258,3 +259,9 @@ Google Docs: [M2_Docs](https://docs.google.com/document/d/1uXNUvgiqn1qukKXd6Vfyt
 PDF: [M2_PDF](https://github.com/com-480-data-visualization/ThreeLittleBirds/blob/master/public/data/M2_ThreeLittleBirds.pdf)
 
 Functional Project Prototype: https://three-little-birds-nine.vercel.app
+
+### Milestone 3
+
+Process Book: [Process_Book](https://github.com/com-480-data-visualization/ThreeLittleBirds/blob/master/ProcessBook.pdf)
+
+Project Website: https://three-little-birds-nine.vercel.app
