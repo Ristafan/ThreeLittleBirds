@@ -290,18 +290,15 @@ export function attachClusterClickHandler(map) {
   map.on('singleclick', (event) => {
     const currentLayers = map.get('pointsLayers');
 
-    const pointsLayer = currentLayers.pointsLayer;
-    const labelLayer = currentLayers.labelLayer;
     const feature = map.forEachFeatureAtPixel(
       event.pixel,
       (feature, layer) => {
-        if (layer === pointsLayer || layer === labelLayer) {
+        if (layer === currentLayers.pointsLayer || layer === currentLayers.labelLayer) {
           return feature;
         }
       }
     );
 
-    // CLICK OUTSIDE CLUSTERS
     if (!feature) {
       if (sliderState.selection?.active) {
         sliderState.selection = {
@@ -309,23 +306,15 @@ export function attachClusterClickHandler(map) {
           type: null,
           ids: []
         };
-
         update_visualizations(getSliderFilter());
       }
-
       return;
     }
 
-    // CLICKED A CLUSTER
     const clusteredFeatures = feature.get('features');
-
     if (!clusteredFeatures?.length) return;
 
-    const extent = clusteredFeatures[0]
-      .getGeometry()
-      .getExtent()
-      .slice();
-
+    const extent = clusteredFeatures[0].getGeometry().getExtent().slice();
     for (const f of clusteredFeatures) {
       extend(extent, f.getGeometry().getExtent());
     }
