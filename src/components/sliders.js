@@ -22,14 +22,14 @@ export function getSliderFilter() {
         if (sliderState.year.min === sliderState.year.max) {
             if (year !== sliderState.year.min) return false;
         } else {
-            if (year <= sliderState.year.min || year >= sliderState.year.max) return false;
+            if (year < sliderState.year.min || year > sliderState.year.max) return false;
         }
 
         const alt = +d.HEIGHT;
         if (sliderState.altitude.min === sliderState.altitude.max) {
             if (alt !== sliderState.altitude.min) return false;
         } else {
-            if (alt <= sliderState.altitude.min || alt >= sliderState.altitude.max) return false;
+            if (alt < sliderState.altitude.min || alt > sliderState.altitude.max) return false;
         }
 
         const month = +d.INCIDENT_MONTH;
@@ -382,6 +382,6 @@ export function applyClusterSelection(data) {
     );
 
     return data.filter(d =>
-        ids.has(String(d.id ?? d.INDEX_NR))
+        ids.has(String(d.INDEX_NR).trim())
     );
 }

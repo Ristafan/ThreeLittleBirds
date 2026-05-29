@@ -42,17 +42,13 @@ export function init_map(data, migration_data, targetId = "primary-vis", layers 
     initializeMigrationLayer();
 
     return {
-        update: async (filteredData) => {
-            const transformed = filteredData.map(d => ({
-                id: +d.INDEX_NR,
-                lon: +d.LONGITUDE,
-                lat: +d.LATITUDE,
-                size: +d.SIZE
-            }));
-            const clusterSource = await clusterSource_from_data(transformed);
-            updatePointsLayers(map, clusterSource);
-            map.render();
-        },
-        getLayers: () => map.getLayers(),
+    update: (filteredData) => {
+        Promise.resolve().then(async () => {
+        const clusterSource = await clusterSource_from_data(filteredData);
+        updatePointsLayers(map, clusterSource);
+        map.render();
+        });
+    },
+    getLayers: () => map.getLayers(),
     };
 }

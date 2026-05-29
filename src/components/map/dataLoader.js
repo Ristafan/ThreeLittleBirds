@@ -8,9 +8,13 @@ import Cluster from 'ol/source/Cluster';
 import { LineString } from 'ol/geom';
 
 export async function clusterSource_from_data(data) {
-  
+  const validData = data.filter(d =>
+    Number.isFinite(d.lon) &&
+    Number.isFinite(d.lat) &&
+    !(d.lon === 0 && d.lat === 0)
+  );
 // convert each data point to an OpenLayers Feature with a Point geometry
-  const features = data.map(d => {
+  const features = validData.map(d => {
     return new Feature({
       id: d.id,
       geometry: new Point(fromLonLat([+d.lon, +d.lat])),

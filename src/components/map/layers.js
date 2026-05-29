@@ -181,7 +181,7 @@ export function createPointsLayers(map) {
   const labelLayer = new VectorLayer({
     source: null,
     style: (feature) => {
-      const size = feature.get('features').length;
+      const size = feature.get('size');
       if (size <= 1) return null;
 
       return new Style({
@@ -218,20 +218,20 @@ export function createPointsLayers(map) {
 
 export function updatePointsLayers(map, clusterSource) {
   const layers = map.get('pointsLayers');
-
-  if (!layers) {
-    throw new Error('Call createPointsLayers(map) first');
-  }
+  if (!layers) throw new Error('Call createPointsLayers(map) first');
 
   let { pointsLayer, labelLayer } = layers;
 
-  // REMOVE OLD WEBGL LAYER
+  // Find the current z-index before removing
+  const zIndex = pointsLayer.getZIndex();
+
+  // Dispose GPU resources before removing
+  pointsLayer.dispose();
   map.removeLayer(pointsLayer);
 
-  // RECREATE WEBGL LAYER
+  // Recreate with same style
   pointsLayer = new WebGLVectorLayer({
     source: clusterSource,
-
     style: {
       'circle-radius': [
         'interpolate',
@@ -271,17 +271,13 @@ export function updatePointsLayers(map, clusterSource) {
   });
 
   pointsLayer.set('id', POINTS_LAYER_ID);
+  pointsLayer.setZIndex(zIndex); // preserve z-index explicitly
 
-  // INSERT BELOW LABELS
-  map.getLayers().insertAt(
-    map.getLayers().getLength() - 1,
-    pointsLayer
-  );
+  map.addLayer(pointsLayer);     // addLayer respects zIndex — no insertAt needed
 
-  // LABEL LAYER CAN STAY
   labelLayer.setSource(clusterSource);
 
-  // UPDATE STORED REFERENCE
+  // Update stored reference
   layers.pointsLayer = pointsLayer;
 
   map.render();
@@ -337,7 +333,7 @@ export function attachClusterClickHandler(map) {
     sliderState.selection = {
       active: true,
       type: 'cluster',
-      ids: clusteredFeatures.map(f => String(f.get('id')))
+      ids: clusteredFeatures.map(f => f.get('id'))
     };
 
     update_visualizations(getSliderFilter());

@@ -8,6 +8,7 @@ import { MIGRATION_LAYER_ID } from './map/layers.js';
 
 const state = {
   data: null,
+  mapData: null,
   map: null,
   heatmaps: null,
   barplots: null,
@@ -37,14 +38,16 @@ export async function init_visualizations() {
   map_worker.postMessage(state.data);
 
   map_worker.onmessage = (e) => {
-    const features = e.data;
+    state.mapData = e.data;
 
-    // remove all loader overlays from the dom
     document.querySelectorAll('.vis-loader').forEach(el => el.remove());
 
-    state.map = init_map(features, state.migration_data);
-    state.heatmaps = init_heatmaps(state.data);
-    state.barplots = init_barplot(state.data);
+    state.map = init_map(state.mapData, state.migration_data);
+
+    setTimeout(() => {
+      state.heatmaps = init_heatmaps(state.data);
+      state.barplots = init_barplot(state.data);
+    }, 0);
   };
 
   // toggle layer visibility based on checkbox state
@@ -76,8 +79,13 @@ export function update_visualizations(filterFn) {
   const filtered = applyClusterSelection(baseFiltered);
   console.log('Filtered rows:', filtered.length);
 
-
-  if (state.map?.update)      state.map.update(filtered);
+  const filteredIds = new Set(
+  filtered.map(d => String(d.INDEX_NR).trim())
+  );
+  const filteredMapData = state.mapData.filter(d =>
+    filteredIds.has(d.id)
+  );
+  if (state.map?.update) {state.map.update(filteredMapData);}
   if (state.heatmaps?.update) state.heatmaps.update(filtered);
   if (state.barplots?.update) state.barplots.update(filtered);
 }
