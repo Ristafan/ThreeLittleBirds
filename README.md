@@ -56,56 +56,6 @@ Note: Feel free to click the play button on the bottom right of the screen to he
 
 ## Setup
 
-This project uses Webpack, Babel, and D3.js. To ensure we are all working in the same environment, follow these steps to set up the project locally.
-
-## Running with Docker
-
-If you prefer to run the project in a containerized environment, you can use Docker.
-
-### Prerequisites
-
-Make sure Docker is installed and running on your machine.
-
-You can verify your installation with:
-
-```bash
-docker --version
-```
-
-### Build the Docker Image
-
-From the root of the project, build the Docker image:
-
-```bash
-# Build the image with a tag name
-docker build -t threelittlebirds:latest .
-```
-
-### Run the Docker Container
-
-Start the container and expose the application on port `8080`:
-
-```bash
-# Run the container using that tag
-docker run -d -p 8080:80 --name birds-app threelittlebirds:latest
-```
-
-The application will then be available at:
-
-- http://localhost:8080
-
-### Useful Docker Commands
-
-```bash
-# View running containers
-docker ps
-
-# Stop the container when you are done
-docker stop birds-app
-```
-
----
-
 ### 1. Initial Setup
 
 Clone the repository and install the dependencies defined in `package.json`:
@@ -152,6 +102,52 @@ We use Continuous Deployment via Vercel.
 - Do not push to `master` directly.
 - Create a feature branch for your work.
 - Open a Pull Request (PR). Vercel will generate a preview link for your branch so we can review the visualizations live before merging.
+
+## Running with Docker
+
+If you prefer to run the project in a containerized environment, you can use Docker.
+
+### Prerequisites
+
+Make sure Docker is installed and running on your machine.
+
+You can verify your installation with:
+
+```bash
+docker --version
+```
+
+### Build the Docker Image
+
+From the root of the project, build the Docker image:
+
+```bash
+# Build the image with a tag name
+docker build -t threelittlebirds:latest .
+```
+
+### Run the Docker Container
+
+Start the container and expose the application on port `8080`:
+
+```bash
+# Run the container using that tag
+docker run -d -p 8080:80 --name birds-app threelittlebirds:latest
+```
+
+The application will then be available at:
+
+- http://localhost:8080
+
+### Useful Docker Commands
+
+```bash
+# View running containers
+docker ps
+
+# Stop the container when you are done
+docker stop birds-app
+```
 
 ## Extra (Past Milestones)
 
