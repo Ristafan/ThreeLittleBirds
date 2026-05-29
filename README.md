@@ -21,12 +21,12 @@ The project is intended to help flight planners, insurance companies, and wildli
 To set up the project locally, follow the steps provided in the [setup](#setup-1) section.
 
 
-### The visualization
+### The Visualization
 
 When you load the webpage, you will be greeeted by a simple explanation of the project and the datasets that we used. Scroll down to find the section containing the visualizations, or click on the visualizations tab to be taken there directly.
 
 
-#### The map
+#### The Map
 
 The entry point to our visualization is through the map. On the map you see clusters of bird strikes which represent the "danger zones". You can easily pan around, and zoom in and out using the mouse to adjust the view. The sliders on the right of the map allow you to select the data being displayed. These affect both the map and the subsequent visualizations.
 
@@ -36,7 +36,7 @@ On the top left of the map, there is a checkbox that allows you to toggle on and
 
 Note: Bird species can sometime share the same flight paths, so overlapping paths add to the intensity on the screen.
 
-#### The sliders
+#### The Sliders
 
 The sliders are the main selection tool for the user. They filter the data and select only the parts that interest you. These include filter for year, month, time of day; but also categorical filters for weather and others. There is a reset button at the top right of the sliders section to reset them back to the default.
 
