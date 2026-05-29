@@ -17,3 +17,5 @@ coverage/
 *.tgz
 *.cache
 public/data/STRIKE_REPORTS.csv
+public/data/columnAnalysis.py
+public/data/test.csv

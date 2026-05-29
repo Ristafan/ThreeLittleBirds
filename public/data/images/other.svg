@@ -1,0 +1,164 @@
+<svg id="aircraft-damage-grid" viewBox="0 0 840 840" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <g id="engine_sym" transform="translate(-70,-60), scale(0.25)">
+    <path fill="inherit" stroke="#333" stroke-width="12" d="M502.467,186.733h-34.133c-3.413,0-6.827,2.56-7.68,5.973l-23.893,70.827h-23.04l-23.04-38.4
+        c-1.707-2.56-4.267-4.267-7.68-4.267h-34.133v-25.6c0-5.12-3.413-8.533-8.533-8.533H280.6V152.6h25.6
+        c5.12,0,8.533-3.413,8.533-8.533v-51.2c0-5.12-3.413-8.533-8.533-8.533H152.6c-5.12,0-8.533,3.413-8.533,8.533v51.2
+        c0,5.12,3.413,8.533,8.533,8.533h25.6v34.133h-68.267c-2.56,0-4.267,0.853-5.973,2.56s-2.56,3.413-2.56,5.973v25.6H41.667
+        c-5.12,0-8.533,3.413-8.533,8.533v51.2H16.067V255c0-5.12-3.413-8.533-8.533-8.533S-1,249.88-1,255v68.267
+        c0,5.12,3.413,8.533,8.533,8.533s8.533-3.413,8.533-8.533v-25.6h17.067v68.267c0,5.12,3.413,8.533,8.533,8.533h64l31.573,47.787
+        c1.707,1.707,4.267,3.413,6.827,3.413H383c3.413,0,5.973-1.707,7.68-5.12l23.04-46.08h23.893l23.04,46.08
+        c1.707,3.413,4.267,5.12,7.68,5.12h34.133c5.12,0,8.533-3.413,8.533-8.533V195.267C511,190.147,507.587,186.733,502.467,186.733z" />
+      <path fill="none" stroke="#666" stroke-width="3" d="M161.133,101.4h136.533v34.133h-25.6h-85.333h-25.6V101.4z M195.267,152.6h68.267v34.133h-68.267V152.6z M50.2,357.4V237.933 h51.2V357.4H50.2z M377.027,408.6H148.333l-29.867-45.204V229.4v-25.6h68.267h85.333H331.8v25.6 c0,5.12,3.413,8.533,8.533,8.533 h37.547l22.187,36.978v87.609L377.027,408.6z M417.133,357.4v-76.8H434.2v76.8H417.133z M493.933,408.6h-20.48l-22.187-42.789 v-93.714l23.04-68.297h19.627V408.6z" />
+    </g>
+
+    <g id="prop_sym" transform="translate(-60,-60), scale(5)" stroke="#333" stroke-width="1.2">
+      <path d="M12.3857 15.9243C13.4769 15.9243 14.3616 15.0397 14.3616 13.9484C14.3616 12.8572 13.4769 11.9725 12.3857 11.9725C11.2944 11.9725 10.4097 12.8572 10.4097 13.9484C10.4097 15.0397 11.2944 15.9243 12.3857 15.9243Z" fill="inherit" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M17.6516 6.78573C18.6068 7.48731 19.4119 8.37294 20.0195 9.39047C20.6174 10.3918 21.0121 11.5008 21.1814 12.6543" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M3.58189 12.7105C3.74669 11.5369 4.14459 10.4081 4.75217 9.39065C5.35585 8.37968 6.1544 7.49885 7.10135 6.79928" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M8.25357 21.8201C9.47636 22.4625 10.8321 22.811 12.2131 22.8379C13.5847 22.8646 14.9438 22.5734 16.1838 21.9872" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M11.7139 12.0905L10.5439 11.0906C10.0866 10.6976 9.76309 10.1719 9.61846 9.5866C9.47383 9.00126 9.51524 8.3854 9.73695 7.82469L12.1009 1.87193C12.193 1.6162 12.3748 1.40262 12.6126 1.27086C12.8503 1.1391 13.1278 1.09813 13.3935 1.15557C13.6592 1.21301 13.895 1.36494 14.057 1.58314C14.2191 1.80134 14.2965 2.07097 14.2748 2.34192L13.5008 12.3185" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M11.1125 15.4594L10.8285 16.9743C10.7177 17.5677 10.424 18.1116 9.98865 18.5298C9.55327 18.9479 8.99798 19.2194 8.40058 19.3062L2.06683 20.2342C1.79975 20.281 1.52475 20.2296 1.29261 20.0895C1.06047 19.9493 0.88687 19.73 0.803871 19.4718C0.720872 19.2137 0.734078 18.9342 0.841052 18.6851C0.948025 18.4359 1.14154 18.2339 1.38586 18.1163L10.4125 13.7964" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M14.3307 14.2994L15.7846 13.7874C16.3535 13.5869 16.9708 13.5691 17.5502 13.7366C18.1297 13.904 18.6423 14.2483 19.0165 14.7214L22.9873 19.7432C23.1609 19.9512 23.2535 20.2149 23.248 20.4857C23.2424 20.7566 23.1392 21.0163 22.9572 21.217C22.7753 21.4177 22.5269 21.5459 22.2579 21.5779C21.9889 21.6099 21.7173 21.5436 21.4934 21.3911L13.2387 15.7344" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <g id="wing_sym" transform="translate(-70,-60), scale(0.25)">
+      <path fill="inherit" stroke="#333" stroke-width="10" d="M384 50c-14.688 0-29.365 6.747-31.676 20.23 10.285-3.726 21.404-5.66 32.533-5.693 10.456-.03 20.915 1.62 30.696 5.01C412.873 56.517 398.44 50 384 50zm.89 32.697c-10.248.03-20.532 1.925-29.447 5.617-6.347 2.63-13.647 6.577-18.795 11.012C331.5 103.762 329 108.05 329 112v52.236l110-43.334V112c0-3.913-2.39-8.276-7.207-12.72-4.818-4.44-11.67-8.425-17.688-11.012-8.762-3.768-18.97-5.6-29.216-5.57zM494 118.582L83.895 280.14c-5.35 2.733-13.294 10.738-20.874 21.96-7.634 11.304-15.202 25.66-21.79 40.543-10.3 23.274-18.013 48.48-20.917 64.373 22.138-3.977 44.664-8.047 67.347-12.112l5.723-37.95c30.852-8.914 111.01-29.017 154.287-40.42l.28-.56.634.317C345.567 290.76 409.75 278.177 494 268.315V118.582zm0 167.834c-25.687 3.027-49.473 6.31-72.91 10.152l-35.108 52.364c38.81-4.09 75.245-6.675 108.018-7.112v-55.404zm-97.424 14.397c-41.764 7.628-84.273 17.402-136.435 31.033l-18.333 36.67c41.485-6.58 82.124-12.432 120.756-16.973l34.013-50.73zM236.94 337.99c-36.766 9.856-78.698 21.625-127.913 35.66l-2.672 17.922c37.804-6.734 75.923-13.384 113.56-19.53l17.026-34.052zm65.583 39.733a3495.754 3495.754 0 0 0-24.73 3.623L281 418h18l3.523-40.277zm-95.9 14.882a6526.23 6526.23 0 0 0-24.88 4.184L185 434h18l3.623-41.395zm-96.05 16.54c-8.267 1.467-16.535 2.932-24.762 4.402L89 450h18l3.574-40.854z"/>
+    </g>
+
+    <g id="fuse_sym">
+      <rect x="-80" y="-15" width="160" height="30" rx="15" fill="inherit" stroke="#333" stroke-width="4"/>
+      <line x1="-50" y1="0" x2="50" y2="0" stroke-dasharray="3,5" stroke-width="2" stroke="#555"/>
+    </g>
+
+    <g id="tail_sym" transform="translate(-70,-60), scale(0.25)">
+      <path fill="inherit" stroke="#333" stroke-width="12" d="M41.918 27.688l5.035 18.48 59.123 10.2 46.766 153.976-56.938 15.496 2.748 10.09.967 3.55-1.794 3.208c-24.027 42.99-40.35 87.134-76.77 132.066 7.738 9.582 25.567 30.68 49.098 52.12 31.787 28.96 73.7 57.357 111.283 58.76 93.952 3.503 163.51-70.954 163.51-70.954l2.754-2.98 146.3 3.247v-72.783l-124.207-4.56-2.338-4.946c-45.31-95.853-150.475-223.65-223.66-287.746zm10.256 37.646l38.998 143.14 39.06-10.632L92.078 72.22z M192.785 255a96.87 96.87 0 0 0-21.89 2.33c-52.185 11.633-85.204 63.597-73.57 115.78 11.632 52.186 63.596 85.205 115.78 73.572 52.185-11.633 85.204-63.597 73.57-115.78-9.996-44.847-49.78-75.54-93.89-75.902z" />
+    </g>
+
+    <g id="rad_sym">
+      <path d="M -40,30 C -40,-30 40,-30 40,30 Z" fill="inherit" stroke="#333" stroke-width="3"/>
+      <path d="M -20,10 C -20,-10 20,-10 20,10" fill="none" stroke="#666" stroke-width="1"/>
+      <path d="M -30,20 C -30,-20 30,-20 30,20" fill="none" stroke="#666" stroke-width="1"/>
+      <line x1="0" y1="30" x2="0" y2="-15" fill="none" stroke="#666" stroke-width="1"/>
+      <line x1="-25" y1="5" x2="25" y2="5" fill="none" stroke="#666" stroke-width="1"/>
+    </g>
+
+    <g id="nose_sym">
+      <circle cx="0" cy="0" r="40" fill="inherit" stroke="#333" stroke-width="4"/>
+      <path d="M -25,-10 L -12,-22 L 12,-22 L 25,-10 L 12,-5 L -12,-5 Z" fill="none" stroke="#333" stroke-width="1.5"/>
+    </g>
+
+    <g id="windshld_sym">
+      <path d="M -45,15 L -20,-20 L 20,-20 L 45,15 L 25,20 L 15,-5 L -15,-5 L -25,20 Z" fill="inherit" stroke="#333" stroke-width="3.5"/>
+    </g>
+
+    <g id="lg_sym">
+      <line x1="0" y1="-30" x2="0" y2="20" fill="none" stroke-width="5" stroke="#555"/>
+      <line x1="-19" y1="20" x2="19" y2="20" fill="none" stroke-width="5" stroke="#555"/>
+      <rect x="-30" y="5" width="12" height="30" rx="3" fill="inherit" stroke="#333" stroke-width="2.5"/>
+      <rect x="18" y="5" width="12" height="30" rx="3" fill="inherit" stroke="#333" stroke-width="2.5"/>
+      <line x1="0" y1="-5" x2="20" y2="-25" fill="none" stroke-width="2" stroke="#555"/>
+    </g>
+
+    <g id="lghts_sym" transform="translate(-70,-60), scale(0.25)">
+      <path fill="inherit" stroke="#333" stroke-width="10" d="M255,75.884c-83.627,0-161.28,28.16-209.067,75.947C15.213,181.697-1,217.537-1,255.084c0,98.133,115.2,179.2,256,179.2 c3.413,0,7.68-2.56,8.533-5.973c34.133-113.493,34.133-232.96,0-346.453C261.827,78.444,258.413,75.884,255,75.884z M249.027,418.071c-128.853-2.56-232.96-74.24-232.96-162.133c0-33.28,14.507-64.853,41.813-92.16 c43.52-42.667,114.347-69.12,191.147-70.827C279.747,199.617,279.747,311.404,249.027,418.071z" />
+      <path fill="none" stroke="#666" stroke-width="3" d="M505.88,324.204l-187.733-76.8c-4.267-2.56-9.387,0-11.093,4.267c-2.56,4.267,0,9.387,4.267,11.093l187.733,76.8 c0.853,0.853,2.56,0.853,3.413,0.853c3.413,0,6.827-1.707,7.68-5.12C512.707,331.031,510.147,325.911,505.88,324.204z" />
+      <path fill="none" stroke="#666" stroke-width="3" d="M311.32,177.431l187.733,76.8c0.853,0.853,2.56,0.853,3.413,0.853c3.413,0,6.827-1.707,7.68-5.12 c2.56-4.267,0-9.387-4.267-11.093l-187.733-76.8c-4.267-2.56-9.387,0-11.093,4.267 C304.493,170.604,307.053,175.724,311.32,177.431z" />
+      <path fill="none" stroke="#666" stroke-width="3" d="M505.88,409.537l-187.733-76.8c-4.267-2.56-8.533,0-11.093,4.267s0,9.387,4.267,11.093l187.733,76.8 c0.853,0.853,2.56,0.853,3.413,0.853c3.413,0,6.827-1.707,7.68-5.12C512.707,416.364,510.147,411.244,505.88,409.537z" />
+    </g>
+  </defs>
+
+  <rect width="100%" height="100%" fill="#f4f7fa" />
+
+  <g id="STR_RAD" transform="translate(210, 0)">
+    <rect x="10" y="10" width="190" height="190" rx="8" fill="inherit" stroke="#d0d0d0" stroke-width="1.5"/>
+    <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_RAD</text>
+    <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">RADOME</text>
+    <use href="#rad_sym" x="105" y="115"/>
+  </g>
+
+  <g id="STR_NOSE" transform="translate(420, 0)">
+    <rect x="10" y="10" width="190" height="190" rx="8" fill="inherit" stroke="#d0d0d0" stroke-width="1.5"/>
+    <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_NOSE</text>
+    <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">NOSE SECTION</text>
+    <use href="#nose_sym" x="105" y="125"/>
+  </g>
+
+  <g id="STR_WINDSHLD" transform="translate(630, 0)">
+    <rect x="10" y="10" width="190" height="190" rx="8" fill="inherit" stroke="#d0d0d0" stroke-width="1.5"/>
+    <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_WINDSHLD</text>
+    <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">WINDSHIELD</text>
+    <use href="#windshld_sym" x="105" y="125"/>
+  </g>
+
+  <g id="STR_ENG1" transform="translate(0, 210)">
+    <rect x="10" y="10" width="190" height="190" rx="8" fill="inherit" stroke="#d0d0d0" stroke-width="1.5"/>
+    <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_ENG1</text>
+    <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">ENGINE 1</text>
+    <use href="#engine_sym" x="105" y="125"/>
+  </g>
+
+  <g id="STR_ENG2" transform="translate(210, 210)">
+    <rect x="10" y="10" width="190" height="190" rx="8" fill="inherit" stroke="#d0d0d0" stroke-width="1.5"/>
+    <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_ENG2</text>
+    <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">ENGINE 2</text>
+    <use href="#engine_sym" x="105" y="125"/>
+  </g>
+
+  <g id="STR_ENG3" transform="translate(420, 210)">
+    <rect x="10" y="10" width="190" height="190" rx="8" fill="inherit" stroke="#d0d0d0" stroke-width="1.5"/>
+    <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_ENG3</text>
+    <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">ENGINE 3</text>
+    <use href="#engine_sym" x="105" y="125"/>
+  </g>
+
+  <g id="STR_ENG4" transform="translate(630, 210)">
+    <rect x="10" y="10" width="190" height="190" rx="8" fill="inherit" stroke="#d0d0d0" stroke-width="1.5"/>
+    <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_ENG4</text>
+    <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">ENGINE 4</text>
+    <use href="#engine_sym" x="105" y="125"/>
+  </g>
+
+  <g id="STR_WING_ROT" transform="translate(0, 420)">
+    <rect x="10" y="10" width="190" height="190" rx="8" fill="inherit" stroke="#d0d0d0" stroke-width="1.5"/>
+    <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_WING_ROT</text>
+    <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">WING / ROTOR</text>
+    <use href="#wing_sym" x="105" y="125"/>
+  </g>
+
+  <g id="STR_FUSE" transform="translate(210, 420)">
+    <rect x="10" y="10" width="190" height="190" rx="8" fill="inherit" stroke="#d0d0d0" stroke-width="1.5"/>
+    <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_FUSE</text>
+    <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">FUSELAGE</text>
+    <use href="#fuse_sym" x="105" y="125"/>
+  </g>
+
+  <g id="STR_PROP" transform="translate(420, 420)">
+    <rect x="10" y="10" width="190" height="190" rx="8" fill="inherit" stroke="#d0d0d0" stroke-width="1.5"/>
+    <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_PROP</text>
+    <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">PROPELLER</text>
+    <use href="#prop_sym" x="105" y="125"/>
+  </g>
+
+  <g id="STR_TAIL" transform="translate(630, 420)">
+    <rect x="10" y="10" width="190" height="190" rx="8" fill="inherit" stroke="#d0d0d0" stroke-width="1.5"/>
+    <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_TAIL</text>
+    <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">EMPENNAGE / TAIL</text>
+    <use href="#tail_sym" x="105" y="125"/>
+  </g>
+
+  <g id="STR_LGHTS" transform="translate(210, 630)">
+    <rect x="10" y="10" width="190" height="190" rx="8" fill="inherit" stroke="#d0d0d0" stroke-width="1.5"/>
+    <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_LGHTS</text>
+    <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">EXTERNAL LIGHTS</text>
+    <use href="#lghts_sym" x="105" y="115"/>
+  </g>
+
+  <g id="STR_LG" transform="translate(420, 630)">
+    <rect x="10" y="10" width="190" height="190" rx="8" fill="inherit" stroke="#d0d0d0" stroke-width="1.5"/>
+    <text x="20" y="35" font-family="monospace" font-size="14" font-weight="bold" fill="#333" stroke="none">STR_LG</text>
+    <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#777" stroke="none">LANDING GEAR</text>
+    <use href="#lg_sym" x="105" y="125"/>
+  </g>
+
+</svg>

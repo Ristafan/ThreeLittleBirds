@@ -31,6 +31,7 @@
       <a href="#dataset">Dataset</a>
       <a href="#eda">Analysis</a>
       <a href="#visualizations">Visualizations</a>
+      <a href="#project">The Project Story</a>
       <a href="#team">Team</a>
     </nav>
   </header>
@@ -211,13 +212,8 @@
         <div class="radio-inputs">
           <label class="radio"><input type="radio" name="aircraft-tab" data-target="Airplane" checked><span class="name">Airplane</span></label>
           <label class="radio"><input type="radio" name="aircraft-tab" data-target="Helicopter"><span class="name">Helicopter</span></label>
-          <label class="radio"><input type="radio" name="aircraft-tab" data-target="Glider"><span class="name">Glider</span></label>
-          <label class="radio"><input type="radio" name="aircraft-tab" data-target="Balloon"><span class="name">Balloon</span></label>
-          <label class="radio"><input type="radio" name="aircraft-tab" data-target="Dirigible"><span class="name">Dirigible</span></label>
-          <label class="radio"><input type="radio" name="aircraft-tab" data-target="Gyroplane"><span class="name">Gyroplane</span></label>
-          <label class="radio"><input type="radio" name="aircraft-tab" data-target="Ultralight"><span class="name">Ultralight</span></label>
           <label class="radio"><input type="radio" name="aircraft-tab" data-target="Other"><span class="name">Other</span></label>
-          <label class="radio"><input type="radio" name="aircraft-tab" data-target="Unknown"><span class="name">Unknown</span></label>
+
         </div>
         <div id="Airplane" class="tabcontent" style="display: block;">
           <div class="vis-loader">
@@ -229,13 +225,7 @@
           </div>
         </div>
         <div id="Helicopter" class="tabcontent"></div>
-        <div id="Glider" class="tabcontent"></div>
-        <div id="Balloon" class="tabcontent"></div>
-        <div id="Dirigible" class="tabcontent"><p>Not yet implemented. Try Airplane instead.</p></div>
-        <div id="Gyroplane" class="tabcontent"></div>
-        <div id="Ultralight" class="tabcontent"></div>
-        <div id="Other" class="tabcontent"><p>Not yet implemented. Try Airplane instead.</p></div>
-        <div id="Unknown" class="tabcontent"><p>Not yet implemented. Try Airplane instead.</p></div>
+        <div id="Other" class="tabcontent"></div>
       </div>
 
     <!-- Right Bottom: Bar/Time series -->
@@ -255,6 +245,91 @@
     </div>
   </div>
 </section>
+
+  <!-- ───────────────────────── THE PROJECT ────────────────────────── -->
+  <section id="project" class="section alt-bg">
+    <div class="container">
+      <h2 class="section-title">The Project Story</h2>
+      
+      <div class="story-container">
+        <p class="section-lead">
+          Every day, thousands of aircraft share the sky with millions of migrating birds. 
+          When these two worlds collide, the results are costly—and occasionally catastrophic. 
+          <strong>Three Little Birds</strong> bridges environmental science and aviation safety, turning 
+          historical incident data into actionable spatial-temporal insights.
+        </p>
+
+        <div class="story-timeline">
+          <div class="story-phase">
+            <h3>The Collision of Two Worlds</h3>
+            <p>
+              Aviation safety typically treats bird strikes as isolated, unpredictable anomalies. 
+              By merging over 280,000 FAA incident reports (1990–2023) with modern high-resolution 
+              satellite telemetry tracking global avian migration networks, we uncover a different story. 
+              The sky isn't an empty void; it has invisible, highly congested seasonal highways where human 
+              engineering directly intersects with ancient evolutionary pathways.
+            </p>
+          </div>
+
+          <div class="story-phase">
+            <h3>Decoding the "Danger Zone"</h3>
+            <p>
+              Our exploratory analysis revealed that these encounters are highly predictable. 
+              While bird strikes are fundamentally "bottom-heavy", with a median incident altitude of just 50 feet, the 
+              true risk profile shifts dramatically across seasons. We discovered a powerful bimodal pattern: 
+              a massive migration surge in late summer (July–September) overlapping perfectly with peak 
+              commercial air travel schedules, followed by a secondary spring corridor in March and April.
+            </p>
+          </div>
+
+          <div class="story-phase">
+            <h3>From Data to Defense</h3>
+            <p>
+              This dashboard moves beyond static graphs to provide a cohesive, multi-dimensional control room. 
+              By interacting with our hotspot maps, structural damage heatmaps, and temporal trend finders, 
+              aviation safety officers can isolate high-risk parameters, environmental researchers can map flyway 
+              encroachments, and the public can view our shared aerial ecosystems through a rigorous, data-driven lens.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="deliverables-section">
+        <h3 class="deliverables-title">Project Deliverables</h3>
+        <div class="card-grid three-col">
+          
+          <div class="card deliverable-card">
+            <span class="card-icon">📌</span>
+            <h3>Milestone 1</h3>
+            <p>Project proposal, problem definition, and initial exploratory data analysis (EDA) of the FAA and avian telemetry datasets.</p>
+            <p> </p>
+            <a href="#dataset" class="btn btn-small">View EDA Trends</a>
+          </div>
+
+          <div class="card deliverable-card">
+            <span class="card-icon">📄</span>
+            <h3>Milestone 2</h3>
+            <p>Functional pipeline architecture, structural layout, and initial deployment of the interactive map prototype.</p>
+            <div class="download-links">
+              <a href="https://github.com/com-480-data-visualization/ThreeLittleBirds/blob/master/public/data/M2_ThreeLittleBirds.pdf" target="_blank" rel="noopener" class="link-tag">Download PDF →</a>
+              <a href="https://docs.google.com/document/d/1uXNUvgiqn1qukKXd6VfytE65qpUvLgwY8Lny9tntYhM/edit?usp=sharing" target="_blank" rel="noopener" class="link-tag">Google Docs →</a>
+            </div>
+          </div>
+
+          <div class="card deliverable-card">
+            <span class="card-icon">🚀</span>
+            <h3>Milestone 3</h3>
+            <p>The finalized interactive dashboard featuring linked visual components, optimized data caching, and full multi-variable filtering.</p>
+            <a href="https://three-little-birds-nine.vercel.app" target="_blank" rel="noopener" class="btn btn-small">Launch Live App</a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
   <!-- ───────────────────────────── TEAM ────────────────────────────── -->
   <section id="team" class="section">
     <div class="container">
